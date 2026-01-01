@@ -1,3 +1,33 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+dist/
+build/
+
+# Misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+images/Deets/Calander/SMBT_Calendar _2025_6Kx9K.tif
 pages/sbmedia/media/videos/V02_PujyaMasterVideo.mp4
 pages/sbmedia/media/videos/V03_PujyaMasterVideo.mp4
 pages/sbmedia/media/videos/V04_PujyaMasterVideo.mp4
@@ -9,4 +39,3 @@ pages/sbmedia/media/videos/V09_PujyaMasterVideo.mp4
 pages/sbmedia/media/videos/V10_PujyaMasterVideo.mp4
 pages/sbmedia/media/videos/V11_PujyaMasterVideo.mp4
 pages/sbmedia/media/videos/V12_PujyaMasterVideo.mp4
-images/Deets/Calander/SMBT_Calendar _2025_6Kx9K.tif
