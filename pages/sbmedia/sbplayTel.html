@@ -1,0 +1,939 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sb.org Player</title>
+    <link href="https://www.saibharadwaja.org/styles/bootstrap.min.css" rel="stylesheet">
+    <script src="https://www.saibharadwaja.org/scripts/popper.min.js"></script>
+    <script src="https://www.saibharadwaja.org/scripts/bootstrap.min.js"></script>
+    <link href="../../styles/Sborg923.css" rel="stylesheet">
+    <link rel="icon" href="../../sbfavicon.ico" type="image/x-icon" />
+
+    <!-- Include Amplitude JS -->
+    <script type="text/javascript" src="js/amplitude.min.js"></script>
+
+    <!-- Include For Navbar -->
+    <script src="../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../Scripts/include-html.min.js"></script>
+
+    <!-- Include Style Sheet -->
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+    <link rel="preload" href="https://www.saibharadwaja.org/fonts/JIMS_Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://www.saibharadwaja.org/fonts/Catamaran.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="prefetch" href="../../audiovideos/telugu/0A_Gurudhyanam_PujyaSriAcharyaEB.mp3" as="">
+</head>
+<body class="bodyFillGrad">
+
+    <div id="preload">
+
+
+        <img src="imgs/prev.png" />
+        <img src="imgs/play.png" />
+        <img src="imgs/pause.png" />
+        <img src="imgs/next.png" />
+
+        <img src="imgs/repeat-off.png" />
+        <img src="imgs/repeat-on.png" />
+        <img src="imgs/shuffle-off.png" />
+        <img src="imgs/shuffle-on.png" />
+
+        <img src="imgs/now-playing.png" />
+
+        <img src="imgs/volume.png" />
+        <img src="imgs/mute.png" />
+
+        <img src="imgs/backarrow.png" />
+
+        <img src="imgs/youtubem-ready-red.png" />
+        <img src="imgs/youtubem-available-white.png" />
+        <img src="imgs/youtubem-notavailable-blue.png" />
+        <img src="imgs/youtubem-notavailable-grey.png" />
+    </div>
+    <div class="gapperTop"><a id="TopOfThePage" href=""></a></div>
+
+    <div include-html="/sbHeaderMenu923.html" id="header_file"></div>
+
+    <!-- Blue Playlist Container -->
+    <div id="blue-playlist-container" class="">
+
+        <!-- Amplitude Player -->
+        <div id="amplitude-player">
+
+            <!-- Left Side Player -->
+            <div id="amplitude-left">
+
+                <img class="img img-fluid" data-amplitude-song-info="cover_art_url" />
+                <div id="player-left-bottom">
+                    <div id="time-container">
+                        <span class="current-time">
+                            <span class="amplitude-current-hours"></span>:
+                            <span class="amplitude-current-minutes"></span>:<span class="amplitude-current-seconds"></span>
+                        </span>
+                        <div id="progress-container">
+                            <input type="range" class="amplitude-song-slider" />
+                            <progress id="song-played-progress" class="amplitude-song-played-progress"></progress>
+                            <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+                        </div>
+                        <span class="duration">
+                            <span class="amplitude-duration-hours"></span>:
+                            <span class="amplitude-duration-minutes"></span>:<span class="amplitude-duration-seconds"></span>
+                        </span>
+                    </div>
+
+                    <div id="control-container">
+                        <div id="repeat-container">
+                            <div class="amplitude-repeat" id="repeat"></div>
+                            <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
+                        </div>
+
+                        <div id="central-control-container">
+                            <div id="central-controls">
+                                <div class="amplitude-prev" id="previous"></div>
+                                <div class="amplitude-play-pause" id="play-pause"></div>
+                                <div class="amplitude-next" id="next"></div>
+                            </div>
+                        </div>
+
+                        <div id="volume-container">
+                            <div class="volume-controls">
+                                <div class="amplitude-mute amplitude-not-muted"></div>
+                                <input type="range" class="amplitude-volume-slider" />
+                                <div class="ms-range-fix"></div>
+                            </div>
+                            <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle-right"></div>
+                        </div>
+                    </div>
+
+                    <div id="meta-container">
+                        <span class="txtPageName">Telugu Speeches</span><br />
+                        <span data-amplitude-song-info="songnumber" class="song-number"></span>
+                        <span data-amplitude-song-info="name" class="song-name"></span>
+
+                        <div class="song-artist-engname">
+                            <span data-amplitude-song-info="engname"></span>
+                            <span data-amplitude-song-info="artist"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Left Side Player -->
+            <!-- Right Side Player -->
+            <div id="amplitude-right">
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="0">
+
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">A.</span> గురుధ్యానము</span>
+                        <span class="song-engtitle">Guru Dhyanamu</span>
+                    </div>
+                    <span class="song-duration">0:27</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="1">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">B.</span> భజన</span>
+                        <span class="song-engtitle">Bhajana</span>
+                    </div>
+                    <span class="song-duration">40:09</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="2">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">1.</span> సుప్రభాతము</span>
+                        <span class="song-engtitle">Suprabhatamu</span>
+                    </div>
+                    <span class="song-duration">27:43</span>
+                    <a href="https://youtu.be/SGuD9FjVGZw" class="youtubem-link" target="_blank">
+                        <img class="youtubem-grey" src="imgs/youtubem-available-white.png" />
+                        <img class="youtubem-white" src="imgs/youtubem-ready-red.png" />
+                    </a>
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="3">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">2.</span> కాకడ ఆరతి</span>
+                        <span class="song-engtitle">Kakada Arati</span>
+                    </div>
+                    <span class="song-duration">26:31</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="4">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">3A.</span> బాబా జీవితము బోధ</span>
+                        <span class="song-engtitle">Baba Jeevithamu Bodha @Kalichedu</span>
+                    </div>
+                    <span class="song-duration">34:02</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="5">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">3B.</span> బాబా జీవితము బోధ</span>
+                        <span class="song-engtitle">Baba Jeevithamu Bodha @Kalichedu</span>
+                    </div>
+                    <span class="song-duration">27:24</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="6">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">3C.</span> బాబా జీవితము బోధ</span>
+                        <span class="song-engtitle">Baba Jeevithamu Bodha @Kalichedu </span>
+                    </div>
+                    <span class="song-duration">30:08</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="7">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">3D.</span> బాబా జీవితము బోధ</span>
+                        <span class="song-engtitle">Baba Jeevithamu Bodha @Kalichedu </span>
+                    </div>
+                    <span class="song-duration">23:19</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="8">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">4.</span> భగవంతునియందు విశ్వాసము</span>
+                        <span class="song-engtitle">Bhagwantudu Endu Viswasam</span>
+                    </div>
+                    <span class="song-duration">1:05:46</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="9">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">5.</span>  మన ధర్మము -మన కర్తవ్యము</span>
+                        <span class="song-engtitle">Mana Dharmam - Mana Kartavyam</span>
+                    </div>
+                    <span class="song-duration">1:00:17</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="10">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">6.</span>  లౌకిక జీవితము - పారమార్థికత</span>
+                        <span class="song-engtitle">Loukika Jeevithamu - Parmarthika</span>
+                    </div>
+                    <span class="song-duration">55:14</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="11">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">7A.</span> ప్రకృతి, పరిశోధన, విజ్ఞానము</span>
+                        <span class="song-engtitle">Prakruti, Parisodhana, Vignanam @Porumamilla</span>
+                    </div>
+                    <span class="song-duration">21:31</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="12">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">7B.</span> ప్రకృతి, పరిశోధన, విజ్ఞానము</span>
+                        <span class="song-engtitle">Prakruti, Parisodhana, Vignanam @Porumamilla</span>
+                    </div>
+                    <span class="song-duration">22:07</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="13">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">7C.</span> ప్రకృతి, పరిశోధన, విజ్ఞానము</span>
+                        <span class="song-engtitle">Prakruti, Parisodhana, Vignanam @Porumamilla</span>
+                    </div>
+                    <span class="song-duration">22:22</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="14">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">7D.</span> ప్రకృతి, పరిశోధన, విజ్ఞానము</span>
+                        <span class="song-engtitle">Prakruti, Parisodhana, Vignanam @Porumamilla</span>
+                    </div>
+                    <span class="song-duration">22:51</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="15">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">8.</span> ఆధ్యాత్మిక జీవిత రహస్యము</span>
+                        <span class="song-engtitle">Adhyatmika Jeevitha Rahasyam</span>
+                    </div>
+                    <span class="song-duration">1:09:11</span>
+                    <a href="https://youtu.be/TQ7Pcb7UyPE" class="youtubem-link" target="_blank">
+                        <img class="youtubem-grey" src="imgs/youtubem-available-white.png" />
+                        <img class="youtubem-white" src="imgs/youtubem-ready-red.png" />
+                    </a>
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="16">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">9A.</span> మహానంది పిల్లలు</span>
+                        <span class="song-engtitle">Mahanandi Children</span>
+                    </div>
+                    <span class="song-duration">23:39</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="17">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">9B.</span> మహానంది పిల్లలు</span>
+                        <span class="song-engtitle">Mahanandi Children</span>
+                    </div>
+                    <span class="song-duration">23:41</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="18">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">10.</span> మాస్టరుగారు పూజ</span>
+                        <span class="song-engtitle">Mastergaru Pooja</span>
+                    </div>
+                    <span class="song-duration">22:16</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="19">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">11.</span> మధ్యాహ్న ఆరతి</span>
+                        <span class="song-engtitle">Madhyana Arati</span>
+                    </div>
+                    <span class="song-duration">15:22</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="20">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">12.</span> ధుని స్థాపన - 15.12.1988</span>
+                        <span class="song-engtitle">Dhuni Sthapana - 15.12.1988.mp3</span>
+                    </div>
+                    <span class="song-duration">43:14</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="21">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">13.</span> అస్థి నాస్థి - విద్యానగర్</span>
+                        <span class="song-engtitle">Asti Naasti - Vidyanagar</span>
+                    </div>
+                    <span class="song-duration">27:46</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="22">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">14.</span> అస్థి నాస్థి - ఒంగోలు</span>
+                        <span class="song-engtitle">Asti Naasti - Ongole</span>
+                    </div>
+                    <span class="song-duration">37:34</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="23">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">15A.</span> వైజ్ఞానిక శాస్త్రము - భగవంతుడు</span>
+                        <span class="song-engtitle">Vaignanika Sastram - Bhagwantud @Nandyala</span>
+                    </div>
+                    <span class="song-duration">26:04</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="24">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">15B.</span> వైజ్ఞానిక శాస్త్రము - భగవంతుడు</span>
+                        <span class="song-engtitle">Vaignanika Sastram - Bhagwantud @Nandyala</span>
+                    </div>
+                    <span class="song-duration">31:06</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="25">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">15C.</span> వైజ్ఞానిక శాస్త్రము - భగవంతుడు</span>
+                        <span class="song-engtitle">Vaignanika Sastram - Bhagwantud @Nandyala</span>
+                    </div>
+                    <span class="song-duration">31:07</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="26">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">15D.</span> వైజ్ఞానిక శాస్త్రము - భగవంతుడు</span>
+                        <span class="song-engtitle">Vaignanika Sastram - Bhagwantud @Nandyala</span>
+                    </div>
+                    <span class="song-duration">34:04</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="27">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">16.</span> గురుపూర్ణిమ  ఒంగోలు I</span>
+                        <span class="song-engtitle">Guru Poornima-Ongole I</span>
+                    </div>
+                    <span class="song-duration">10:47</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="28">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">17.</span> గురుపూర్ణిమ  ఒంగోలు II</span>
+                        <span class="song-engtitle">Guru Poornima-Ongole II</span>
+                    </div>
+                    <span class="song-duration">28:03</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="29">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">18.</span> పూజ్య మాస్టరుగారి పుట్టినరోజు 1984</span>
+                        <span class="song-engtitle">Pujya Master's Birthday 1984</span>
+                    </div>
+                    <span class="song-duration">16:08</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="30">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">18A.</span> పూజ్య మాస్టరుగారు</span>
+                        <span class="song-engtitle">Mastergaru</span>
+                    </div>
+                    <span class="song-duration">33:50</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="31">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">18B.</span> పూజ్య మాస్టరుగారు</span>
+                        <span class="song-engtitle">Mastergaru</span>
+                    </div>
+                    <span class="song-duration">28:12</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="32">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">19.</span> విజయదశమి</span>
+                        <span class="song-engtitle">Vijayadasami</span>
+                    </div>
+                    <span class="song-duration">1:03:38</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="33">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">20.</span>సమస్యల పరిష్కారము - బాబా సాంప్రదాయము</span>
+                        <span class="song-engtitle">Samasyala Parishkaaramu - Baba Sampradaayamu</span>
+                    </div>
+                    <span class="song-duration">1:02:48</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="34">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">21.</span> దత్త స్తోత్రం</span>
+                        <span class="song-engtitle">Datta Stotram</span>
+                    </div>
+                    <span class="song-duration">15:36</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="35">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">22.</span> ఆధ్యాత్మిక జీవనము</span>
+                        <span class="song-engtitle">Adhyatmika Jeevanam</span>
+                    </div>
+                    <span class="song-duration">2:06:08</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="36">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">23.</span> ధూప్ ఆరతి</span>
+                        <span class="song-engtitle">Evening Arati</span>
+                    </div>
+                    <span class="song-duration">18:56</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="37">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">24.</span> భజన & టాక్</span>
+                        <span class="song-engtitle">Bhajana and Talk</span>
+                    </div>
+                    <span class="song-duration">41:57</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="38">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25A.</span> భగవద్గీత 1వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 1</span>
+                    </div>
+                    <span class="song-duration">1:12:21</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="39">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25B.</span> భగవద్గీత 2వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 2</span>
+                    </div>
+                    <span class="song-duration">58:36</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="40">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25C.</span> భగవద్గీత 3వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 3</span>
+                    </div>
+                    <span class="song-duration">58:36</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="41">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25D.</span> భగవద్గీత 4వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 4</span>
+                    </div>
+                    <span class="song-duration">1:31:09</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="42">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25E.</span> భగవద్గీత 5వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 5</span>
+                    </div>
+                    <span class="song-duration">46:03</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="43">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25F.</span> భగవద్గీత 6వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 6</span>
+                    </div>
+                    <span class="song-duration">28:25</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="44">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25G.</span> భగవద్గీత 7వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 7</span>
+                    </div>
+                    <span class="song-duration">1:02:40</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="45">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25H.</span> భగవద్గీత 8వ రోజు</span>
+                        <span class="song-engtitle">Bhagawad Gita Day 8</span>
+                    </div>
+                    <span class="song-duration">2:13:09</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="46">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">25I.</span> భగవద్గీత 9వ రోజు</span>
+                        <span class="song-engtitle">Gita Day 9 on Kaarthika Pournima</span>
+                    </div>
+                    <span class="song-duration">1:12:19</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="47">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">26.</span> శేజ్ ఆరతి</span>
+                        <span class="song-engtitle">Shej Aarathi</span>
+                    </div>
+                    <span class="song-duration">13:43</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+            </div>
+            <!-- End Right Side Player -->
+        </div>
+        <!-- End Amplitdue Player -->
+    </div>
+
+
+
+    <nav class="navbar fixed-bottom">
+        <div class="cont_principal">
+            <div class="cont_breadcrumbs">
+                <div class="cont_breadcrumbs_3">
+                    <ul>
+                        <li><a class="aHere" href="sbplayTel.html">తెలుగు ప్రసంగములు</a></li>
+                        <li><a href="sbplayEng.html">English Sp.&nbsp;</a></li>
+                        <li><a href="sbplaySongs.html">Bhajans</a></li>
+                        <li><a href="sbplayVideos.html">Videos  </a></li>
+                        <li><a href="#TopOfThePage">Go To Top&nbsp;&nbsp;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <script type="text/javascript" src="js/functionsTel2.js"></script>
+</body>
+</html>

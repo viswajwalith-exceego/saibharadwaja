@@ -1,0 +1,401 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sb.org Player</title>
+    <link href="https://www.saibharadwaja.org/styles/bootstrap.min.css" rel="stylesheet">
+    <script src="https://www.saibharadwaja.org/scripts/popper.min.js"></script>
+    <script src="https://www.saibharadwaja.org/scripts/bootstrap.min.js"></script>
+    <link href="../../styles/Sborg923.css" rel="stylesheet">
+    <link rel="icon" href="../../sbfavicon.ico" type="image/x-icon" />
+
+    <!-- Include Amplitude JS -->
+    <script type="text/javascript" src="js/amplitude.min.js"></script>
+
+    <!-- Include For Navbar -->
+    <script src="../../Scripts/jquery-3.6.0.min.js"></script>
+    <script src="../../Scripts/include-html.min.js"></script>
+
+    <!-- Include Style Sheet -->
+    <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+    <link rel="preload" href="https://www.saibharadwaja.org/fonts/JIMS_Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://www.saibharadwaja.org/fonts/Catamaran.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="prefetch" href="../../audiovideos/telugu/0A_Gurudhyanam_PujyaSriAcharyaEB.mp3" as="">
+</head>
+<body class="bodyFillGrad">
+
+    <div id="preload">
+
+
+        <img src="imgs/prev.png" />
+        <img src="imgs/play.png" />
+        <img src="imgs/pause.png" />
+        <img src="imgs/next.png" />
+
+        <img src="imgs/repeat-off.png" />
+        <img src="imgs/repeat-on.png" />
+        <img src="imgs/shuffle-off.png" />
+        <img src="imgs/shuffle-on.png" />
+
+        <img src="imgs/now-playing.png" />
+
+        <img src="imgs/volume.png" />
+        <img src="imgs/mute.png" />
+
+        <img src="imgs/backarrow.png" />
+
+        <img src="imgs/youtubem-ready-red.png" />
+        <img src="imgs/youtubem-available-white.png" />
+        <img src="imgs/youtubem-notavailable-blue.png" />
+        <img src="imgs/youtubem-notavailable-grey.png" />
+    </div>
+    <div class="gapperTop"><a id="TopOfThePage" href=""></a></div>
+
+    <div include-html="/sbHeaderMenu923.html" id="header_file"></div>
+
+    <!-- Blue Playlist Container -->
+    <div id="blue-playlist-container" class="">
+
+        <!-- Amplitude Player -->
+        <div id="amplitude-player">
+
+            <!-- Left Side Player -->
+            <div id="amplitude-left">
+
+                <img class="img img-fluid" data-amplitude-song-info="cover_art_url" />
+                <div id="player-left-bottom">
+                    <div id="time-container">
+                        <span class="current-time">
+                            <span class="amplitude-current-hours"></span>:
+                            <span class="amplitude-current-minutes"></span>:<span class="amplitude-current-seconds"></span>
+                        </span>
+                        <div id="progress-container">
+                            <input type="range" class="amplitude-song-slider" />
+                            <progress id="song-played-progress" class="amplitude-song-played-progress"></progress>
+                            <progress id="song-buffered-progress" class="amplitude-buffered-progress" value="0"></progress>
+                        </div>
+                        <span class="duration">
+                            <span class="amplitude-duration-hours"></span>:
+                            <span class="amplitude-duration-minutes"></span>:<span class="amplitude-duration-seconds"></span>
+                        </span>
+                    </div>
+
+                    <div id="control-container">
+                        <div id="repeat-container">
+                            <div class="amplitude-repeat" id="repeat"></div>
+                            <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle"></div>
+                        </div>
+
+                        <div id="central-control-container">
+                            <div id="central-controls">
+                                <div class="amplitude-prev" id="previous"></div>
+                                <div class="amplitude-play-pause" id="play-pause"></div>
+                                <div class="amplitude-next" id="next"></div>
+                            </div>
+                        </div>
+
+                        <div id="volume-container">
+                            <div class="volume-controls">
+                                <div class="amplitude-mute amplitude-not-muted"></div>
+                                <input type="range" class="amplitude-volume-slider" />
+                                <div class="ms-range-fix"></div>
+                            </div>
+                            <div class="amplitude-shuffle amplitude-shuffle-off" id="shuffle-right"></div>
+                        </div>
+                    </div>
+
+                    <div id="meta-container">
+                        <span class="txtPageName">Songs, Bhajanas &amp; Naama Japam</span><br />
+                        <span data-amplitude-song-info="songnumber" class="song-number"></span>
+                        <span data-amplitude-song-info="name" class="song-name"></span>
+
+                        <div class="song-artist-engname">
+                            <span data-amplitude-song-info="engname"></span>
+                            <span data-amplitude-song-info="artist"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Left Side Player -->
+            <!-- Right Side Player -->
+            <div id="amplitude-right">
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="0">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P01.</span>&nbsp;పరమ పురుషుడు</span>
+                        <span class="song-engtitle">Parampurushudu</span>
+                    </div>
+                    <span class="song-duration">06:17</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="1">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P02.</span>&nbsp;బాల భరద్వాజునకు</span>
+                        <span class="song-engtitle">Baala Bharadwajunaku</span>
+                    </div>
+                    <span class="song-duration">08:31</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="2">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P03.</span>&nbsp;భోగి పండ్లు</span>
+                        <span class="song-engtitle">Bhogi Pandlu</span>
+                    </div>
+                    <span class="song-duration">05:00</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="3">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P04.</span>&nbsp;చిట్టి చిట్టి భరద్వాజులు</span>
+                        <span class="song-engtitle">Chitti Chitti Bharadwajulu</span>
+                    </div>
+                    <span class="song-duration">04:20</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="4">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P05.</span>&nbsp;కల్యాణము చూదము రారండి</span>
+                        <span class="song-engtitle">Kalyaanamu Chodamu Rarandi</span>
+                    </div>
+                    <span class="song-duration">08:31</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="5">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P06.</span>&nbsp;కుసుమాంజలి</span>
+                        <span class="song-engtitle">Kusumanjali</span>
+                    </div>
+                    <span class="song-duration">06:34</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="6">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">P07.</span>&nbsp;మంగళం జయ మంగళం</span>
+                        <span class="song-engtitle">Mangalam Jaya Mangalam</span>
+                    </div>
+                    <span class="song-duration">07:06</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="7">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">S01.</span>&nbsp;లాలి శ్రీ గురు భరద్వాజ</span>
+                        <span class="song-engtitle">Laali Sriguru Bharadwaja Maharaja Meeku Laali</span>
+                    </div>
+                    <span class="song-duration">4:59</span>
+                    <a href="https://youtu.be/G98fzHPd54o" class="youtubem-link" target="_blank">
+                        <img class="youtubem-grey" src="imgs/youtubem-available-white.png" />
+                        <img class="youtubem-white" src="imgs/youtubem-ready-red.png" />
+                    </a>
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="8">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">S02.</span>&nbsp;నిదురించు మాయమ్మా</span>
+                        <span class="song-engtitle">Nidurinchu Mayamma Nidurinchavammaa</span>
+                    </div>
+                    <span class="song-duration">6:15</span>
+                    <a href="https://youtu.be/iPWgqVwRZcQ" class="youtubem-link" target="_blank">
+                        <img class="youtubem-grey" src="imgs/youtubem-available-white.png" />
+                        <img class="youtubem-white" src="imgs/youtubem-ready-red.png" />
+                    </a>
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="9">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">B01.</span>&nbsp;దత్తా దత్తా</span>
+                        <span class="song-engtitle">Dattaa Dattaa</span>
+                    </div>
+                    <span class="song-duration">22:09</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="10">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">B02.</span>&nbsp;జయ గురు జయ గురు</span>
+                        <span class="song-engtitle">Jaya Guru Jaya Guru</span>
+                    </div>
+                    <span class="song-duration">23:41</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="11">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">B03.</span>&nbsp;సాయినాధ జై జై భరద్వాజ జై జై</span>
+                        <span class="song-engtitle">Sainatha Jai Jai</span>
+                    </div>
+                    <span class="song-duration">08:34</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="12">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">B04.</span>&nbsp;శిష్యప్రియ భజనప్రియ</span>
+                        <span class="song-engtitle">Shishya Priya Bhajana Priya</span>
+                    </div>
+                    <span class="song-duration">04:44</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="13">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">B05.</span>&nbsp;అవధూతరూప సాయి</span>
+                        <span class="song-engtitle">Avadhuta Roopa Sai</span>
+                    </div>
+                    <span class="song-duration">08:15</span>
+                    <img class="youtubem-grey" src="imgs/youtubem-notavailable-grey.png" />
+                    <img class="youtubem-white" src="imgs/youtubem-notavailable-blue.png" />
+                </div>
+
+                <div class="song amplitude-song-container amplitude-play-pause" data-amplitude-song-index="14">
+                    <div class="song-now-playing-icon-container">
+                        <div class="play-button-container">
+
+                        </div>
+                        <img class="now-playing" src="imgs/now-playing.png" />
+                    </div>
+                    <div class="song-meta-data">
+                        <span class="song-title"><span class="song-number">N01.</span>&nbsp;ఓం సమర్థ సద్గురు - నామ జపము</span>
+                        <span class="song-engtitle">Naama Japam</span>
+                    </div>
+                    <span class="song-duration">59:35</span>
+                    <a href="https://youtu.be/uKVmMjj_vyU" class="youtubem-link" target="_blank">
+                        <img class="youtubem-grey" src="imgs/youtubem-available-white.png" />
+                        <img class="youtubem-white" src="imgs/youtubem-ready-red.png" />
+                    </a>
+                </div>
+
+
+            </div>
+            <!-- End Right Side Player -->
+        </div>
+        <!-- End Amplitdue Player -->
+    </div>
+
+
+    <nav class="navbar fixed-bottom bg-transparent ">
+        <div class="cont_principal">
+            <div class="cont_breadcrumbs">
+                <div class="cont_breadcrumbs_3">
+                    <ul>
+                        <li><a href="sbplayTel.html">తెలుగు ప్రసంగములు</a></li>
+                        <li><a href="sbplayEng.html">English Sp.&nbsp;</a></li>
+                        <li><a class="aHere" href="sbplaySongs.html">Bhajans</a></li>
+                        <li><a href="sbplayVideos.html">Videos  </a></li>
+                        <li><a href="#TopOfThePage">Go To Top&nbsp;&nbsp;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <script type="text/javascript" src="js/functionsSongs.js"></script>
+</body>
+</html>

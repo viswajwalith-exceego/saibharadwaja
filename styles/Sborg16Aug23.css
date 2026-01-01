@@ -1,0 +1,725 @@
+﻿/*Jai Sai Master!!*/
+/*Version Control
+Release V1.0 : 16 Aug 2023;
+Release V1.1 : Added --masterHeaderBanner-BgColor Variable 24.12.23
+Release V1.2 : Added --slmIndex-Table224 11.2.24
+Release V1.3 : Added Magazine card 724
+Release V1.4 : Added textJustifiedRightAlign from sborg923.css. Now sborg923.css can be deleted
+*/
+
+@font-face {
+    font-family: GglSourceSansProBS;
+    src: url('../fonts/SourceSansPro_Regular.woff2');
+}
+
+@font-face {
+    font-family: OswaldBS;
+    src: url('../fonts/Oswald_Variablefont_Wght.woff2');
+}
+
+@font-face {
+    font-family: LatoRegBS;
+    src: url('../fonts/Lato_Regular.woff2');
+    font-size: smaller;
+}
+
+@font-face {
+    font-family: LatoBold;
+    src: url('../fonts/Lato_Bold.woff2');
+    font-size: smaller;
+}
+
+@font-face {
+    font-family: MandaliBS;
+    src: url('../fonts/Mandali_Regular.woff2');
+    font-size: medium;
+}
+
+@font-face {
+    font-family: SurannaBS;
+    src: url('../fonts/Suranna_Regular.woff2');
+    font-size: medium;
+}
+
+@font-face {
+    font-family: ChathuraBS;
+    src: url('../fonts/Chathura_Bold.woff2');
+    font-size: medium;
+}
+
+@property --masterHeaderBanner-BgColor {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: #ffc107;
+}
+
+ .bodyFillGrad
+
+{
+    background-color: #ffc107;
+    background-image: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-width: 100%;
+    min-height: 100vh;
+}
+
+.booksSubMenuBgGradient {
+    background-color: #ffc107;
+    background-image: linear-gradient(0deg, #f8de88 2%, #ffc107 90%);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.theChildPageContentOffsetter {
+    /* Not really useful. Included for future requirement */
+    padding: 0;
+    margin: 0;
+}
+/*Masterpage Navbar Start***************************************************************************/
+
+.navbar-toggler span {
+    display: block;
+    background-color: #0d1f51;
+    height: 2px;
+    width: 22px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    left: 0;
+    opacity: 1;
+    transition: all 0.35s ease-out;
+    transform-origin: center left;
+}
+
+    /* top line needs a little padding */
+    .navbar-toggler span:nth-child(1) {
+        margin-top: 0.3em;
+    }
+
+/**
+ * Animate collapse into X.
+ */
+
+/* top line rotates 45 degrees clockwise and moves up and in a bit to close the center of the X in the center of the button */
+.navbar-toggler:not(.collapsed) span:nth-child(1) {
+    transform: translate(15%, -33%) rotate(45deg);
+}
+/* center line goes transparent */
+.navbar-toggler:not(.collapsed) span:nth-child(2) {
+    opacity: 0;
+}
+/* bottom line rotates 45 degrees counter clockwise, in, and down a bit to close the center of the X in the center of the button  */
+.navbar-toggler:not(.collapsed) span:nth-child(3) {
+    transform: translate(15%, 33%) rotate(-45deg);
+}
+
+/**
+ * Animate collapse open into hamburger menu
+ */
+
+/* top line moves back to initial position and rotates back to 0 degrees */
+.navbar-toggler span:nth-child(1) {
+    transform: translate(0%, 0%) rotate(0deg);
+}
+/* middle line goes back to regular color and opacity */
+.navbar-toggler span:nth-child(2) {
+    opacity: 1;
+}
+/* bottom line goes back to initial position and rotates back to 0 degrees */
+.navbar-toggler span:nth-child(3) {
+    transform: translate(0%, 0%) rotate(0deg);
+}
+
+.navbar-toggler,
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.manaBigMenuDiv {
+    display: none;
+}
+
+.manaBurgerMenuDiv {
+    display: none;
+}
+
+@media (max-width:992px) {
+    .manaBigMenuDiv {
+        display: none !important;
+    }
+
+    .manaBurgerMenuDiv {
+        display: flex !important;
+    }
+
+    .mainMasterPageMenuFontMobiles {
+        text-align: center;
+        font-family: GglSourceSansProBS, Georgia, serif, MandaliBS;
+        font-size: 12px;
+        font-weight: bold;
+        color: #444444;
+        text-decoration: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .divider {
+        border: 0;
+        height: 1px;
+        background-image: -webkit-linear-gradient(left, #ffc107, #8c8b8b, #ffc107);
+        background-image: -moz-linear-gradient(left, #ffc107, #8c8b8b, #ffc107);
+        background-image: -o-linear-gradient(left, #ffc107, #8c8b8b, #ffc107);
+    }
+
+    .dropdown-divider {
+        border: 0;
+        height: 1px;
+        background-image: -webkit-linear-gradient(left, #ffc107, #8c8b8b, #ffc107);
+        background-image: -moz-linear-gradient(left, #ffc107, #8c8b8b, #ffc107);
+        background-image: -o-linear-gradient(left, #ffc107, #8c8b8b, #ffc107);
+    }
+
+    .navbar-nav > li > a {
+        /* (80px - line-height of 27px) / 2 = 26.5px */
+        padding-top: 12px;
+        padding-bottom: 12px;
+        line-height: 27px;
+    }
+
+    .navbar-nav > li > ul > li > a {
+        /* (80px - line-height of 27px) / 2 = 26.5px */
+        padding-top: 10px;
+        padding-bottom: 10px;
+        line-height: 29px;
+    }
+}
+
+@media (min-width:992px) {
+    .manaBurgerMenuDiv {
+        display: none !important;
+    }
+
+    .manaBigMenuDiv {
+        display: flex !important;
+        border: none;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        background-color: var(--masterHeaderBanner-BgColor);
+        z-index: 9999;
+    }
+
+    .manaBigMenuDiv-left {
+        width: 20%;
+    }
+
+    .manaBigMenuDiv-middle {
+        width: auto;
+        padding: 0px 0px 2px 0px;
+    }
+
+    .manaBigMenuDiv-right {
+        width: 20%;
+    }
+
+    .manaMainMenuDivs {
+        display: inline-table;
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+
+    .manaMainMenuDivs-TopRow {
+        justify-content: center;
+    }
+
+    .manaMainMenuDivs-MiddleGapRow {
+        height: 5px;
+    }
+
+    .manaMainMenuDivs-BottomRow {
+        justify-content: space-between;
+    }
+
+    .manaMainMenuDivs-SubMenu {
+        display: inline-flex;
+    }
+
+    .mainMasterPageMenuFontBigScreens, .manaMainMenuDivs-TopRow > a, .manaMainMenuDivs-BottomRow > a {
+        text-align: center;
+        font-family: GglSourceSansProBS, Georgia, serif, MandaliBS;
+        font-size: 12px;
+        font-weight: bold;
+        color: #775a04;
+        text-decoration: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        .manaMainMenuDivs-TopRow > a:hover {
+            color: #222222;
+        }
+
+        .manaMainMenuDivs-BottomRow > a:hover {
+            color: #222222;
+        }
+
+    .mainBodyDiv {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+}
+.invisibleYellowText {
+    font-size: larger;
+    color: var(--masterHeaderBanner-BgColor);
+}
+/*Masterpage Navbar End***************************************************************************/
+
+/*Default Page Start*/
+.img-center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.txtFooter {
+    font-family: OswaldBS, MandaliBS;
+    font-size: 8px;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    text-align: center;
+}
+.aCenter1023 {
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: #103893;
+    margin: auto;
+    text-shadow: 2px 2px 2px #f8de88;
+}
+.divCenter {
+    border: none;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+/* Defalut Page End */
+
+/*Acharyaeb.aspx and MasterEB Folder Start*/
+.textJustified {
+    text-align: justify;
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    margin: 2px;
+}
+
+
+.textJustifiedRightAlign {
+    text-align: right;
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #173859;
+    text-decoration: none;
+    margin: 2px;
+}
+
+
+.txtInitialLetterHigh {
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 150%;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #103893;
+    margin-left: 5%;
+    margin-right: 1px;
+    text-shadow: 2px 2px 2px #f8de88;
+}
+
+.TitleColourNShadow1 {
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 8pt;
+    font-weight: bold;
+    color: #103893;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 0 0 1px 1px #f2e7e7;
+}
+
+.jaisaimaster {
+    font-family: OswaldBS, MandaliBS;
+    font-size: 8pt;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 2px 2px 2px #f2e7e7;
+}
+
+.textDarkBlueLink {
+    text-align: justify;
+    font-family: OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #103893;
+    text-decoration: none;
+    margin: 0;
+    padding: 0 0 8px 0;
+}
+/*Acharyaeb.aspx and MasterEB Folder End*/
+
+
+.textJustifiedNoMargin {
+    text-align: justify;
+    font-family: LatoRegBS, OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    margin: 0px;
+}
+
+/*Speeches aspx Start*/
+
+.modal-body {
+    padding: 5px;
+}
+
+.btn-close {
+    position: absolute;
+    right: -10px;
+    top: 0;
+}
+/*Speeches aspx End*/
+
+/*Books Start***************************************************************************/
+.copyrightsFont {
+    font-family: OswaldBS, MandaliBS;
+    font-size: 8pt;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    text-align: center;
+    text-shadow: 2px 2px 2px #f2e7e7;
+}
+
+.textDarkBlueLink7pt {
+    text-align: justify;
+    font-family: OswaldBS, MandaliBS;
+    font-size: 7pt;
+    font-weight: normal;
+    color: #103893;
+    text-decoration: none;
+    margin: 0;
+}
+
+.textBooksListNPrices {
+    font-family: LatoRegBS, SurannaBS;
+    font-size: 10px;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    text-align: left;
+}
+
+.textLatoBold10px {
+    font-family: LatoRegBS, SurannaBS;
+    font-size: 10px;
+    font-weight: bold;
+    color: #444444;
+    text-decoration: none;
+    text-align: left;
+}
+
+.txtSmallNumber {
+    font-family: LatoRegBS, SurannaBS;
+    font-size: 8px;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    text-align: left;
+}
+
+.linkReadBookPrevNext {
+    text-align: center;
+    align-content: center;
+    font-family: OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #103893;
+    text-decoration: none;
+    margin: auto;
+}
+
+/*Books End***************************************************************************/
+
+/*Hazarath Tajuddin Baba Start***************************************************************************/
+
+.wordTypeTextJustify {
+    text-align: justify;
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #444444;
+    text-decoration: none;
+    margin: 0;
+    text-indent: 2rem;
+    padding: 2px;
+}
+/*Hazarath Tajuddin Baba End***************************************************************************/
+
+
+/*Readbook Start***************************************************************************/
+.slmIndex-Table224 {
+    font-family: OswaldBS, MandaliBS;
+    font-size: 10px;
+    font-weight: normal;
+    color: rgb(50, 50, 50);
+    text-decoration: none;
+    text-align: center;
+    table-layout: fixed;
+    word-wrap: break-word;
+    border-collapse: collapse;
+    width: 90%;
+    margin: auto;
+}
+
+.slmIndex-Table th {
+    background-color: azure;
+}
+
+.slmIndex-Table tr {
+    line-height: 4vh;
+}
+
+.slmIndex-Table td {
+    text-align: center;
+}
+
+.slmIndex-Table .td_ChapName {
+    text-align: left;
+}
+
+.goToPageFont {
+    font-family: OswaldBS, MandaliBS;
+    font-size: 10px;
+    font-weight: normal;
+    color: rgb(25, 84, 148);
+    text-decoration: none;
+    text-align: center;
+}
+
+.goToPageSelectedPageFont {
+    font-family: OswaldBS, MandaliBS;
+    font-size: 10px;
+    font-weight: normal;
+    color: #262121;
+    text-decoration: none;
+    text-align: center;
+    background-image: linear-gradient(to right, lightgreen, yellow);
+}
+
+.goToPageFontChapterNameTelugu {
+    font-family: ChathuraBS;
+    font-size: 20px;
+    font-weight: normal;
+    color: rgb(9, 42, 77);
+    text-decoration: none;
+    text-align: center;
+}
+
+.textDarkBlueLinkDisabled9pt {
+    text-align: justify;
+    font-family: OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #8c8b8b;
+    text-decoration: none;
+    margin: 0;
+    padding: 0 0 8px 0;
+}
+
+.mana-table {
+    table-layout: fixed;
+    word-wrap: break-word;
+    border-collapse: collapse;
+}
+
+    .mana-table tr {
+        line-height: 1vh;
+        border: none;
+    }
+
+    .mana-table .trChapter {
+        line-height: 1vh;
+        border-top: 0pt groove #dedede;
+        border-bottom: 1pt groove #dedede;
+    }
+
+    .mana-table td, .mana-table th {
+        border: none !important;
+    }
+
+
+.ourOffCanvasCss {
+    background-color: #FF3CAC;
+    background: linear-gradient(90deg, #f8de88 0%, hsla(176, 57%, 89%, 1) 100%);
+    background-repeat: no-repeat;
+}
+
+.mana-readbookBottomTable {
+    table-layout: fixed;
+    border: 0px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-top-color: mediumaquamarine;
+    border-bottom: 0px solid;
+    border-bottom-color: burlywood;
+    border-collapse: separate;
+    margin: 6px 2px 2px 2px;
+}
+
+    .mana-readbookBottomTable tr {
+        line-height: 6vh;
+        border: none;
+    }
+
+    .mana-readbookBottomTable td {
+        border:none;
+        padding: 0px;
+        text-align: center;
+    }
+/*Readbook End***************************************************************************/
+
+/*Photo Gallery Photos.aspx Start**********************************************************************/
+.GglSourceSansPro {
+    text-align: center;
+    font-family: GglSourceSansProBS, OswaldBS, MandaliBS;
+    font-size: 12px;
+    font-weight: normal;
+    color: #6a2c70;
+    text-decoration: none;
+    margin: 2px;
+}
+
+.photosNavigator {
+    background: rgba(51, 170, 51, .3);
+    margin: 6px 20px 2px 20px;
+}
+
+    .photosNavigator > ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: transparent;
+        width: 100%;
+    }
+
+        .photosNavigator > ul > li {
+            float: left;
+        }
+
+            .photosNavigator > ul > li > a {
+                display: block;
+                color: rgba(20, 20, 20, .8);
+                text-align: center;
+                padding: 6px 12px;
+                text-decoration: none;
+            }
+
+                .photosNavigator > ul > li > a:hover:not(.active) {
+                    background: rgba(51, 170, 51, .8);
+                }
+
+                .photosNavigator > ul > li > a.active {
+                    background: rgba(255, 204, 0, .8);
+                }
+/*Photo Gallery Photos.aspx End**********************************************************************/
+
+/* Shared -- Here comes those shared between different pages --Start */
+
+.PageHeadingBS1 {
+    text-align: center;
+    font-family: LatoBold,OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #173859;
+    text-decoration: none;
+    margin: 6px;
+}
+
+.PageHeadingBSSmall {
+    text-align: justify;
+    font-family: LatoBold,OswaldBS, MandaliBS;
+    font-size: 7pt;
+    font-weight: normal;
+    color: #173859;
+    text-decoration: none;
+    margin: 3px;
+}
+
+.mana-fixed-noB-table {
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+    .mana-fixed-noB-table tr {
+        border: none;
+    }
+
+    .mana-fixed-noB-table td, .mana-fixed-noB-table th {
+        border: none !important;
+    }
+
+.td90rightalign {
+    text-align: end;
+}
+
+.LatoCenter9_724 {
+    font-family: LatoRegBS,OswaldBS, MandaliBS;
+    font-size: 9px;
+    font-weight: normal;
+    text-align: center;
+    align-content: center;
+    text-decoration: none;
+    color: darkslategray;
+    margin: auto;
+}
+
+.magazineCard724 {
+    background: rgba(92, 72, 22, .2);
+    margin: 2px 2px 2px 2px;
+}
+
+
+/*Jan 23 - Under Shared section providing Media Query sections here. Can add any new Css under these <922 or >922 sections*/
+@media (min-width:992px) {
+    .imgVHapplied {
+        height: 100vh;
+    }
+}
+
+@media (max-width:992px) {
+    .imgVHapplied {
+        height: auto;
+    }
+
+    /* Shared -- Here comes those shared between different pages -- End */
+

@@ -1,0 +1,160 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="sbjsm.master.cs" Inherits="sbjsm" %>
+
+<!-- Version : 2 Oct 2022 Ammagaru.org Vers 2 redirect -->
+<!-- Version : 3 Aug 2023 Preload the main font -->
+<!-- Version : 16  2024 Main Menu rearraged -->
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Saibharadwaja.org</title>
+    <link href="https://www.saibharadwaja.org/styles/bootstrap.min.css" rel="stylesheet">
+    <script src="https://www.saibharadwaja.org/scripts/popper.min.js"></script>
+    <script src="https://www.saibharadwaja.org/scripts/bootstrap.min.js"></script>
+    <link href="styles/Sborg16Aug23.css" rel="stylesheet">
+    <link rel="icon" href="sbfavicon.ico" type="image/x-icon" />
+
+    <asp:ContentPlaceHolder ID="cphSbMasterHead" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="bodyFillGrad">
+    <form id="frmSborg1" runat="server">
+        <div class="table-responsive">
+            <%--        On Mobile Screens -- Implement This BURGER Menu  START--%>
+            <div class="manaBurgerMenuDiv">
+                <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-warning bg-opacity-100 p-0 mr-auto">
+                    <a class="nav-link" runat="server" href="~/Default.aspx">
+                        <img class="img img-fluid m-0 me-lg-5" runat="server" src="~/images/MasterPage/mainLogo2024.png" alt="Saibharadwaja.org">
+                    </a>
+
+                    <button class="navbar-toggler px-3 collapsed border-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapsingNavbar3" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse fw-normal fs-1" id="collapsingNavbar3">
+                        <ul class="navbar-nav  w-100 justify-content-center mainMasterPageMenuFontMobiles">
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/acharyaeb.aspx">Acharya Sri Ekkirala Bharadwaja</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/Ammagaru/divyajanani.aspx">Divyajanani Alivelu Mangamma
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/sbbooks/sbbooksTel.html">Books</a>
+                            </li>
+
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/magazine.aspx">Saibaba Magazine</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/sbmedia/sbplayTel.html">Speeches & Videos</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/photos/gallery1.aspx">Photos</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/contacts.aspx"><strong>Contacts</strong></a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/pages/calander.aspx"><strong>Calender</strong></a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li class="nav-item d-none d-lg-block"><a class="nav-link">&nbsp;&#9733;&nbsp;</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" runat="server" href="~/Default.aspx">Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <%--        On Mobile Screens -- Implement This BURGER Menu  END--%>
+
+
+            <%--        On NON Mobile Screens -- Implement This Menu  START--%>
+            <div class="manaBigMenuDiv position-fixed">
+                <div class="manaBigMenuDiv-left">
+                    <a runat="server" href="~/Default.aspx">
+                        <img class="img img-fluid m-2" runat="server" src="~/images/MasterPage/mainLogo2024.png" alt="Saibharadwaja.org" />
+                    </a>
+                </div>
+                <div class="manaBigMenuDiv-middle">
+                    <div class="manaMainMenuDivs mainMasterPageMenuFontBigScreens">
+                        <div class="manaMainMenuDivs-TopRow">
+                            <a runat="server" href="~/pages/acharyaeb.aspx">Acharya Sri Ekkirala Bharadwaja</a>
+                            <a class="p-2">&nbsp;&nbsp;&#9733;&nbsp;</a>
+                            <a runat="server" href="~/pages/Ammagaru/divyajanani.aspx">Divyajanani Alivelu Mangamma</a>
+                        </div>
+                        <div class="manaMainMenuDivs-MiddleGapRow">
+                            &nbsp;
+                        </div>
+                        <div class="manaMainMenuDivs-BottomRow">
+                            <a runat="server" href="~/pages/sbbooks/sbbooksTel.html">Books</a>
+                            <a class="p-2 m-0">&#9733;</a>
+                            <a class="p-0 m-0" runat="server" href="~/pages/magazine.aspx">Saibaba Magazine</a>
+                            <a class="p-1 m-0">&#9733;</a>
+                            <a class="p-0 m-0" runat="server" href="~/pages/sbmedia/sbplayTel.html">Speeches & Videos</a>
+                            <a class="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
+                            <a runat="server" href="~/photos/gallery1.aspx">Photos</a>
+                            <a class="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
+                            <a class="p-0 m-0" runat="server" href="~/pages/contacts.aspx">Contacts</a>
+                            <a class="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
+                            <a class="p-0 m-0" runat="server" href="~/pages/calander.aspx">Calender</a>
+                            <!-- 
+                            <div class="dropdown manaMainMenuDivs-SubMenu">
+                                <button class="btn btn-transparant dropdown-toggle mainMasterPageMenuFontBigScreens" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Deets
+                                </button>
+                                <ul class="dropdown-menu booksSubMenuBgGradient text-center mainMasterPageMenuFontBigScreens" aria-labelledby="dropdownMenuButton2">
+                                    <li><a class="dropdown-item" runat="server" href="~/pages/contacts.aspx"><strong>Contacts</strong></a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" runat="server" href="~/pages/calander.aspx"><strong>Calender</strong></a></li>
+                                </ul>
+                            </div>
+                                -->
+                            <a class="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
+                            <a class="p-0 m-0" runat="server" href="~/Default.aspx">Home</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="manaBigMenuDiv-right">
+                    &nbsp;
+                </div>
+            </div>
+            <%--        On NON Mobile Screens -- Implement This Menu  END--%>
+
+            <div class="mt-sm-1">&nbsp;</div>
+            <div class="mt-md-5 mt-lg-5">&nbsp;</div>
+            <div class="d-lg-none">
+                <br />
+            </div>
+
+            <asp:ContentPlaceHolder ID="cphSbChildPageContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </form>
+
+</body>
+</html>
