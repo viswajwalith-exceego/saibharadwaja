@@ -394,6 +394,63 @@ Release V1.4 : Added textJustifiedRightAlign from sborg923.css. Now sborg923.css
     margin: 0px;
 }
 
+/*Default.aspx specific styles*/
+.divGradTB {
+    background-image: linear-gradient(to bottom, #AE7272, #754545);
+}
+
+.textJustifiedNoMarginColored {
+    text-align: center;
+    font-family: LatoRegBS, OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #144d1e;
+    text-decoration: none;
+    margin: 0px;
+}
+
+.card-header.textJustifiedNoMarginColored {
+    background-color: #144d1e !important;
+    color: #ffffff !important;
+    border-bottom: none;
+}
+
+.card-header.textJustifiedNoMarginColored,
+.card-header.textJustifiedNoMarginColored p,
+.card-header.textJustifiedNoMarginColored .textJustifiedNoMarginColoredSmall {
+    color: #ffffff !important;
+}
+
+.textJustifiedNoMarginColoredSmall {
+    text-align: center;
+    font-family: LatoRegBS, OswaldBS, MandaliBS;
+    font-size: 6pt;
+    font-weight: normal;
+    color: #2f714a;
+    text-decoration: none;
+    margin: 0px;
+}
+
+.textJustifiedNoMarginColored2 {
+    text-align: center;
+    font-family: LatoRegBS, OswaldBS, MandaliBS;
+    font-size: 9pt;
+    font-weight: normal;
+    color: #179f54;
+    text-decoration: none;
+    margin: 0px;
+}
+
+.textJustifiedNoMarginColored3 {
+    text-align: center;
+    font-family: LatoRegBS, OswaldBS, MandaliBS;
+    font-size: 6pt;
+    font-weight: normal;
+    color: #179f54;
+    text-decoration: none;
+    margin: 0px;
+}
+
 /*Speeches aspx Start*/
 
 .modal-body {
@@ -722,4 +779,4 @@ Release V1.4 : Added textJustifiedRightAlign from sborg923.css. Now sborg923.css
     }
 
     /* Shared -- Here comes those shared between different pages -- End */
-
+}
