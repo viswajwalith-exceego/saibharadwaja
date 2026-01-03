@@ -197,10 +197,23 @@ function Home() {
         <div className="col-lg-2">&nbsp;</div>
       </div>
 
+      {/* This Div is for Bottom More Margin */}
       <div className="text-center bg-transparant text-muted p-2 m-2">
         &nbsp;
         &nbsp;
+        {/* GridView placeholder - empty in production but takes up space */}
+        <div style={{ display: 'none' }}></div>
       </div>
+
+      <footer className="text-center bg-transparant text-muted p-4 m-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}>
+        <div className="justify-content-end txtFooter">
+          <span>Supported on:</span>
+          <img className="img img-fluid opacity-50" src="/images/DefaultPage/browsers.png" alt="Browsers" />
+        </div>
+        <div className="txtFooter text-center">
+          &#169; 2002-2024: Saibharadwaja.org
+        </div>
+      </footer>
     </div>
   )
 }

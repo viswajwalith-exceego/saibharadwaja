@@ -130,15 +130,18 @@ function Layout({ children }) {
 
       {children}
 
-      <footer className="text-center bg-transparant text-muted p-4 m-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}>
-        <div className="justify-content-end txtFooter">
-          <span>Supported on:</span>
-          <img className="img img-fluid opacity-50" src="/images/DefaultPage/browsers.png" alt="Browsers" />
-        </div>
-        <div className="txtFooter text-center">
-          &#169; 2002-2024: Saibharadwaja.org
-        </div>
-      </footer>
+      {/* Footer - only show if page doesn't have its own footer (like Home) */}
+      {location.pathname !== '/' && (
+        <footer className="text-center bg-transparant text-muted p-4 m-4" style={{backgroundColor: 'rgba(0, 0, 0, 0.05)'}}>
+          <div className="justify-content-end txtFooter">
+            <span>Supported on:</span>
+            <img className="img img-fluid opacity-50" src="/images/DefaultPage/browsers.png" alt="Browsers" />
+          </div>
+          <div className="txtFooter text-center">
+            &#169; 2002-2024: Saibharadwaja.org
+          </div>
+        </footer>
+      )}
     </div>
   )
 }

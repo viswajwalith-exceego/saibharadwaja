@@ -409,15 +409,19 @@ Release V1.4 : Added textJustifiedRightAlign from sborg923.css. Now sborg923.css
     margin: 0px;
 }
 
+/* Default.aspx card header styling - must override Bootstrap */
 .card-header.textJustifiedNoMarginColored {
     background-color: #144d1e !important;
     color: #ffffff !important;
-    border-bottom: none;
+    border-bottom: none !important;
+    padding: 0.5rem 1rem !important;
 }
 
 .card-header.textJustifiedNoMarginColored,
+.card-header.textJustifiedNoMarginColored *,
 .card-header.textJustifiedNoMarginColored p,
-.card-header.textJustifiedNoMarginColored .textJustifiedNoMarginColoredSmall {
+.card-header.textJustifiedNoMarginColored .textJustifiedNoMarginColoredSmall,
+.card-header.textJustifiedNoMarginColored br {
     color: #ffffff !important;
 }
 
