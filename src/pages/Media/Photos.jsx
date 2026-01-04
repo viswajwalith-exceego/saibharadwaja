@@ -144,32 +144,40 @@ function Photos() {
       {/* Lightbox Modal */}
       {isModalOpen && selectedImageIndex !== null && currentPhotos[selectedImageIndex] && (
         <div className="photo-lightbox-overlay" onClick={closeModal}>
+          {/* Controls moved to overlay level for fixed positioning */}
+          <button className="photo-lightbox-close" onClick={closeModal} aria-label="Close">
+            ×
+          </button>
+          <div className="photo-lightbox-counter">
+            {selectedImageIndex + 1} / {currentPhotos.length}
+          </div>
+          <button
+            className="photo-lightbox-nav photo-lightbox-nav-left"
+            onClick={(e) => {
+              e.stopPropagation()
+              goToPrevious()
+            }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <button
+            className="photo-lightbox-nav photo-lightbox-nav-right"
+            onClick={(e) => {
+              e.stopPropagation()
+              goToNext()
+            }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+
           <div className="photo-lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="photo-lightbox-close" onClick={closeModal} aria-label="Close">
-              ×
-            </button>
-            <div className="photo-lightbox-counter">
-              {selectedImageIndex + 1} / {currentPhotos.length}
-            </div>
-            <button
-              className="photo-lightbox-nav photo-lightbox-nav-left"
-              onClick={goToPrevious}
-              aria-label="Previous image"
-            >
-              ‹
-            </button>
             <img
               src={currentPhotos[selectedImageIndex].full}
               alt={`Photo ${selectedImageIndex + 1}`}
               className="photo-lightbox-image"
             />
-            <button
-              className="photo-lightbox-nav photo-lightbox-nav-right"
-              onClick={goToNext}
-              aria-label="Next image"
-            >
-              ›
-            </button>
           </div>
         </div>
       )}

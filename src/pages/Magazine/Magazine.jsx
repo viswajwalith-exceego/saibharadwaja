@@ -46,6 +46,31 @@ function Magazine() {
       { month: 'February', pdf: '/magazines/Saibaba_Magazine_February_2023.pdf', thumb: '/images/Magazines/2023February.jpg' },
       { month: 'January', pdf: '/magazines/Saibaba_Magazine_January_2023.pdf', thumb: '/images/Magazines/2023January.jpg' },
     ],
+    2022: [
+      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2022.pdf', thumb: '/images/Magazines/2022December.jpg' },
+      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2022.pdf', thumb: '/images/Magazines/2022November.jpg' },
+      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2022.pdf', thumb: '/images/Magazines/2022October.jpg' },
+      { month: 'September', pdf: '/magazines/Saibaba_Magazine_September_2022.pdf', thumb: '/images/Magazines/2022September.jpg' },
+      { month: 'August', pdf: '/magazines/Saibaba_Magazine_August_2022.pdf', thumb: '/images/Magazines/2022August.jpg' },
+      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2022.pdf', thumb: '/images/Magazines/2022July.jpg' },
+      { month: 'June', pdf: '/magazines/Saibaba_Magazine_June_2022.pdf', thumb: '/images/Magazines/2022June.jpg' },
+      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2022.pdf', thumb: '/images/Magazines/2022May.jpg' },
+      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2022.pdf', thumb: '/images/Magazines/2022April.jpg' },
+      { month: 'March', pdf: '/magazines/Saibaba_Magazine_March_2022.pdf', thumb: '/images/Magazines/2022March.jpg' },
+      { month: 'February', pdf: '/magazines/Saibaba_Magazine_February_2022.pdf', thumb: '/images/Magazines/2022February.jpg' },
+      { month: 'January', pdf: '/magazines/Saibaba_Magazine_January_2022.pdf', thumb: '/images/Magazines/2022January.jpg' },
+    ],
+    2021: [
+      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2021.pdf', thumb: '/images/Magazines/2021December.jpg' },
+      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2021.pdf', thumb: '/images/Magazines/2021November.jpg' },
+      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2021.pdf', thumb: '/images/Magazines/2021October.jpg' },
+      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2021.pdf', thumb: '/images/Magazines/2021July.jpg' },
+      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2021.pdf', thumb: '/images/Magazines/2021May.jpg' },
+      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2021.pdf', thumb: '/images/Magazines/2021April.jpg' },
+    ],
+    2019: [
+      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2019.pdf', thumb: '/images/Magazines/2019October.jpg' },
+    ],
   }
 
   const renderIssues = (year) => {
@@ -84,7 +109,7 @@ function Magazine() {
           <tbody>
             <tr>
               <td>
-                <div className="card magazineCard724 mx-auto mb-3" style={{maxWidth: '60%'}}>
+                <div className="card magazineCard724 mx-auto mb-3" style={{ maxWidth: '60%' }}>
                   <div className="card-header PageHeadingBS1">Saibaba Magazine</div>
                   <div className="card-body">
                     <img className="img-fluid" src="/images/pages/magazines301224.jpg" alt="Magazine" />
@@ -113,36 +138,76 @@ function Magazine() {
       <div className="container bg-transparant pt-sm-2 pt-md-3">
         <div className="container bg-transparant pt-sm-2 pt-md-3">
           <div className="accordion accordion-flush" id="accordionFlusA1">
-            {Object.keys(magazineIssues).sort((a, b) => b - a).map((year) => (
-              <div className="accordion-item" key={year}>
-                <h2 className="accordion-header" id={`flush-heading${year}`}>
-                  <button
-                    className={`accordion-button ${expandedYear === year ? '' : 'collapsed'}`}
-                    type="button"
-                    onClick={() => setExpandedYear(expandedYear === year ? '' : year)}
-                  >
-                    <span className="TitleColourNShadow1">
-                      <strong>{year}</strong>
-                    </span>
-                  </button>
-                </h2>
+            {Object.keys(magazineIssues)
+              .filter((year) => parseInt(year) >= 2021)
+              .sort((a, b) => b - a)
+              .map((year) => (
+                <div className="accordion-item" key={year}>
+                  <h2 className="accordion-header" id={`flush-heading${year}`}>
+                    <button
+                      className={`accordion-button ${expandedYear === year ? '' : 'collapsed'}`}
+                      type="button"
+                      onClick={() => setExpandedYear(expandedYear === year ? '' : year)}
+                    >
+                      <span className="TitleColourNShadow1">
+                        <strong>{year}</strong>
+                      </span>
+                    </button>
+                  </h2>
 
-                <div
-                  id={`flush-collapse${year}`}
-                  className={`accordion-collapse collapse ${expandedYear === year ? 'show' : ''}`}
-                  aria-labelledby={`flush-heading${year}`}
-                  data-bs-parent="#accordionFlusA1"
-                >
-                  <div className="accordion-body p-0">
-                    <div className="table-responsive">
-                      <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
-                        <tbody>{renderIssues(year)}</tbody>
-                      </table>
+                  <div
+                    id={`flush-collapse${year}`}
+                    className={`accordion-collapse collapse ${expandedYear === year ? 'show' : ''}`}
+                    aria-labelledby={`flush-heading${year}`}
+                    data-bs-parent="#accordionFlusA1"
+                  >
+                    <div className="accordion-body p-0">
+                      <div className="table-responsive">
+                        <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
+                          <tbody>{renderIssues(year)}</tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
+              ))}
+
+            {/* Previous Years Section */}
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="flush-headingPrevious">
+                <button
+                  className={`accordion-button ${expandedYear === 'Previous' ? '' : 'collapsed'}`}
+                  type="button"
+                  onClick={() => setExpandedYear(expandedYear === 'Previous' ? '' : 'Previous')}
+                  style={{ backgroundColor: '#e7f1ff' }} // Light blue background to distinguish
+                >
+                  <span className="TitleColourNShadow1">
+                    <strong>Previous Years</strong>
+                  </span>
+                </button>
+              </h2>
+              <div
+                id="flush-collapsePrevious"
+                className={`accordion-collapse collapse ${expandedYear === 'Previous' ? 'show' : ''}`}
+                aria-labelledby="flush-headingPrevious"
+                data-bs-parent="#accordionFlusA1"
+              >
+                <div className="accordion-body p-0">
+                  <div className="table-responsive">
+                    <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
+                      <tbody>
+                        {Object.keys(magazineIssues)
+                          .filter((year) => parseInt(year) < 2021)
+                          .sort((a, b) => b - a)
+                          .map((year) => (
+                            <React.Fragment key={year}>{renderIssues(year)}</React.Fragment>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>

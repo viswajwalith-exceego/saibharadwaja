@@ -59,22 +59,23 @@
 
 .photo-lightbox-close {
   position: absolute;
-  top: -40px;
-  right: 0;
-  background: transparent;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5); /* Added background for visibility if over bright image */
   border: none;
+  border-radius: 50%; /* Circle background */
   color: white;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   cursor: pointer;
   line-height: 1;
   padding: 0;
-  width: 40px;
-  height: 40px;
+  width: 44px; /* Slightly larger touch target */
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 10000;
 }
 
@@ -84,8 +85,8 @@
 
 .photo-lightbox-counter {
   position: absolute;
-  top: -40px;
-  left: 0;
+  top: 20px;
+  left: 20px;
   color: white;
   font-size: 16px;
   font-weight: normal;
@@ -115,11 +116,11 @@
 }
 
 .photo-lightbox-nav-left {
-  left: -60px;
+  left: 20px;
 }
 
 .photo-lightbox-nav-right {
-  right: -60px;
+  right: 20px;
 }
 
 .photo-thumbnail {
@@ -148,15 +149,11 @@
   .photo-lightbox-close {
     top: 10px;
     right: 10px;
-    font-size: 30px;
-    width: 30px;
-    height: 30px;
   }
 
   .photo-lightbox-counter {
     top: 10px;
     left: 10px;
-    font-size: 14px;
   }
 
   .photo-lightbox-image {
