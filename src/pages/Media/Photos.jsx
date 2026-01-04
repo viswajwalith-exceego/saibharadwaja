@@ -1,40 +1,109 @@
 import { useState, useEffect, useCallback } from 'react'
 
 function Photos() {
-  const [activeGallery, setActiveGallery] = useState(1)
   const [selectedImageIndex, setSelectedImageIndex] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
-  const galleries = [
-    { id: 1, name: 'Early Years [15]', count: 15 },
-    { id: 2, name: 'Family', count: 0 },
-    { id: 3, name: 'Photos Set 3', count: 0 },
-    { id: 4, name: 'Photos Set 4', count: 0 },
-    { id: 5, name: 'Photos Set 5', count: 0 },
-    { id: 6, name: 'Photos Set 6', count: 0 },
-    { id: 7, name: 'Photos Set 7', count: 0 },
-  ]
+  // Dynamic import of photos
+  const photoFiles = import.meta.glob('../../../images/Photos/**/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG}', { eager: true, as: 'url' })
 
-  // Sample photos for gallery 1
-  const gallery1Photos = [
-    { thumb: '/images/Photos/1 Early Years/C1.jpg', full: '/images/Photos/1 Early Years/CI1.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C2.jpg', full: '/images/Photos/1 Early Years/CI2.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C3.jpg', full: '/images/Photos/1 Early Years/CI3.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C4.jpg', full: '/images/Photos/1 Early Years/CI4.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C5.jpg', full: '/images/Photos/1 Early Years/CI5.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C6.jpg', full: '/images/Photos/1 Early Years/CI6.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C7.jpg', full: '/images/Photos/1 Early Years/CI7.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C8.jpg', full: '/images/Photos/1 Early Years/CI8.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C9.jpg', full: '/images/Photos/1 Early Years/CI9.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C10.jpg', full: '/images/Photos/1 Early Years/CI10.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C11.jpg', full: '/images/Photos/1 Early Years/CI11.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C12.jpg', full: '/images/Photos/1 Early Years/CI12.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C13.jpg', full: '/images/Photos/1 Early Years/CI13.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C15.jpg', full: '/images/Photos/1 Early Years/CI15.jpg' },
-    { thumb: '/images/Photos/1 Early Years/C14.jpg', full: '/images/Photos/1 Early Years/CI14.jpg' },
-  ]
+  // Transform imported files into gallery structure
+  const getGalleryData = () => {
+    const galleriesMap = {}
 
-  const currentPhotos = activeGallery === 1 ? gallery1Photos : []
+    Object.keys(photoFiles).forEach((path) => {
+      const parts = path.split('/')
+      const fileName = parts.pop()
+      const folderName = parts.pop()
+
+      // Skip files in the root Photos folder if they don't belong to a gallery (or handle them if needed)
+      // For now we assume gallery folders start with a number like "1 Early Years"
+      let galleryId = 999
+      let galleryName = folderName
+
+      const folderMatch = folderName.match(/^(\d+)\s+(.+)$/)
+      if (folderMatch) {
+        galleryId = parseInt(folderMatch[1])
+        galleryName = folderMatch[2]
+      } else if (folderName === 'Photos') {
+        // Skip root files for now or assign to a Misc gallery
+        return
+      }
+
+      if (!galleriesMap[galleryId]) {
+        galleriesMap[galleryId] = {
+          id: galleryId,
+          baseName: galleryName,
+          photosMap: {}
+        }
+      }
+
+      // Parse Photo Info to pair Thumbnails (C1) and Full (CI1)
+      // Regex looks for: [Prefix][Optional I][Number].[Extension]
+      // e.g. C1.jpg, CI1.jpg, F1.JPG, FI1.JPG
+      const fileMatch = fileName.match(/^([a-zA-Z]+)(\d+)\./)
+
+      let photoKey = fileName // Default key is filename
+      let isFull = false
+      let sortNum = 999999
+
+      if (fileMatch) {
+        let text = fileMatch[1]
+        const number = parseInt(fileMatch[2])
+
+        if (text.match(/I$/i)) {
+          isFull = true
+          text = text.slice(0, -1)
+        }
+
+        photoKey = `${text.toUpperCase()}${number}`
+        sortNum = number
+      } else {
+        // Fallback for files that don't match the pattern
+        // Try to find any number for sorting
+        const numMatch = fileName.match(/(\d+)/)
+        if (numMatch) {
+          sortNum = parseInt(numMatch[1])
+        }
+      }
+
+      if (!galleriesMap[galleryId].photosMap[photoKey]) {
+        galleriesMap[galleryId].photosMap[photoKey] = { thumb: null, full: null, sortNum: sortNum }
+      }
+
+      if (isFull) {
+        galleriesMap[galleryId].photosMap[photoKey].full = photoFiles[path]
+      } else {
+        galleriesMap[galleryId].photosMap[photoKey].thumb = photoFiles[path]
+      }
+    })
+
+    // Flatten and finalize
+    const sortedGalleries = Object.values(galleriesMap).sort((a, b) => a.id - b.id)
+
+    return sortedGalleries.map(g => {
+      const photos = Object.values(g.photosMap).map(p => ({
+        thumb: p.thumb || p.full, // Fallback to full if no thumb
+        full: p.full || p.thumb,   // Fallback to thumb if no full
+        sortNum: p.sortNum
+      })).sort((a, b) => a.sortNum - b.sortNum)
+
+      return {
+        id: g.id,
+        name: `${g.baseName} [${photos.length}]`,
+        count: photos.length,
+        photos: photos
+      }
+    })
+  }
+
+  // Memoize data to avoid recalculation on every render (though typically fine purely clientside)
+  const galleries = getGalleryData()
+
+  // Initialize active gallery with the first one available
+  const [activeGallery, setActiveGallery] = useState(galleries.length > 0 ? galleries[0].id : 1)
+
+  const currentPhotos = galleries.find(g => g.id === activeGallery)?.photos || []
 
   const openModal = (index) => {
     setSelectedImageIndex(index)
@@ -123,23 +192,21 @@ function Photos() {
       <br />
       <br />
 
-      {activeGallery === 1 && (
-        <div className="container">
-          <div className="row">
-            {gallery1Photos.map((photo, index) => (
-              <div key={index} className="col-md-3 mb-4">
-                <div
-                  className="photo-thumbnail"
-                  onClick={() => openModal(index)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <img src={photo.thumb} alt={`Photo ${index + 1}`} className="img-fluid img-thumbnail" />
-                </div>
+      <div className="container">
+        <div className="row">
+          {currentPhotos.map((photo, index) => (
+            <div key={index} className="col-md-3 mb-4">
+              <div
+                className="photo-thumbnail"
+                onClick={() => openModal(index)}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={photo.thumb} alt={`Photo ${index + 1}`} className="img-fluid img-thumbnail" />
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
+      </div>
 
       {/* Lightbox Modal */}
       {isModalOpen && selectedImageIndex !== null && currentPhotos[selectedImageIndex] && (
