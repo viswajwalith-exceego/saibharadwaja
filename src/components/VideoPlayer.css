@@ -1,137 +1,214 @@
-/* Video Player Styles - Based on pages/sbmedia/css/app.css */
-
-.sbVidContainer {
-  max-width: 1200px;
-  margin: 20px auto;
+/* Modern Video Player Styles */
+.video-player-container {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  max-width: 1200px;
+  margin: 40px auto;
   gap: 20px;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
 }
 
-.sbVidContainer .main-video-container {
-  flex: 1 1 700px;
-  border-radius: 15px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  background-color: transparent;
-  padding: 15px;
+/* Main Video Section */
+.main-video-section {
+  flex: 2;
+  min-width: 300px;
 }
 
-.sbVidContainer .main-video-container .main-video {
-  margin-bottom: 7px;
-  border-radius: 25px;
+.video-wrapper {
+  position: relative;
   width: 100%;
-}
-
-.sbVidContainer .main-video-container .main-vid-title {
-  font-family: OswaldBS, Arial, sans-serif;
-  padding: 0 0 0 10px;
-  font-size: 20px;
-  color: #444;
-}
-
-.sbVidContainer .select-video-rightside {
-  flex: 1 1 350px;
-  height: 585px;
-  overflow-y: scroll;
+  background: #000;
   border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  background-color: transparent;
-  padding: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  aspect-ratio: 16 / 9;
 }
 
-.sbVidContainer .select-video-rightside::-webkit-scrollbar {
-  width: 10px;
+.main-video-element {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
 }
 
-.sbVidContainer .select-video-rightside::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey;
-  background-color: antiquewhite;
-  border-radius: 5px;
-}
-
-.sbVidContainer .select-video-rightside::-webkit-scrollbar-thumb {
-  background-color: #444;
-  border-radius: 5px;
-}
-
-.sbVidContainer .select-video-rightside .selList {
+.video-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: flex-start;
-  gap: 5px;
-  padding: 10px;
-  background-color: #eee;
-  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+/* Reusing spinner */
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.main-video-info {
+  margin-top: 15px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.main-video-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Playlist Section */
+.video-playlist-section {
+  flex: 1;
+  min-width: 300px;
+  background: #fff;
   border-radius: 12px;
-  margin-bottom: 10px;
-  transition: background-color 0.2s;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  max-height: 600px;
+  overflow: hidden;
 }
 
-.sbVidContainer .select-video-rightside .selList:hover {
-  background-color: #ddd;
+.video-playlist-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
 }
 
-.sbVidContainer .select-video-rightside .selList.active {
-  color: #fff;
-  background-color: #ddf8e1;
+.video-playlist-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.sbVidContainer .select-video-rightside .selList .selList-image {
-  width: 100px;
-  border-radius: 5px;
+.video-playlist-items {
+  overflow-y: auto;
+  max-height: 550px;
+}
+
+/* Scrollbar styling */
+.video-playlist-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.video-playlist-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.video-playlist-items::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 3px;
+}
+
+.video-list-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.video-list-item:hover {
+  background: #f8f9fa;
+}
+
+.video-list-item.active {
+  background: #ebf5fb;
+}
+
+.video-thumb-container {
+  position: relative;
+  width: 120px;
+  height: 68px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.video-list-thumb {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.sbVidContainer .select-video-rightside .selList .selList-title {
-  font-family: OswaldBS, Arial, sans-serif;
-  align-items: flex-start;
-  font-size: 16px;
-  color: #444;
-  margin: 0;
+.play-icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 1.2rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.video-list-item:hover .play-icon-overlay {
+  opacity: 1;
+}
+
+.video-list-info {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.sbVidContainer .select-video-rightside .selList .selList-video {
-  width: 100px;
-  border-radius: 5px;
-  visibility: hidden;
-  display: none;
+.video-list-title {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.3;
+  max-height: 2.6rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.sbVidContainer .select-video-rightside .selList:last-child {
-  margin-bottom: 0;
+.now-playing-badge {
+  display: inline-block;
+  margin-top: 5px;
+  font-size: 0.75rem;
+  color: #3498db;
+  font-weight: 600;
 }
 
-@media (max-width: 1200px) {
-  .sbVidContainer {
-    margin: 60px auto;
+@media (max-width: 900px) {
+  .video-player-container {
+    flex-direction: column;
+  }
+
+  .video-playlist-section {
+    max-height: 400px;
   }
 }
-
-@media (max-width: 450px) {
-  .sbVidContainer .main-video-container .main-vid-title {
-    font-size: 15px;
-    text-align: center;
-  }
-
-  .sbVidContainer .select-video-rightside .selList {
-    flex-flow: column;
-    gap: 10px;
-  }
-
-  .sbVidContainer .select-video-rightside .selList .selList-image {
-    width: 100%;
-    max-width: 200px;
-  }
-
-  .sbVidContainer .select-video-rightside .selList .selList-video {
-    max-width: 10px;
-    width: 100%;
-  }
-
-  .sbVidContainer .select-video-rightside .selList .selList-title {
-    font-size: 12px;
-    text-align: center;
-  }
-}
-

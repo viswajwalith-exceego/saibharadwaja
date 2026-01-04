@@ -4,114 +4,83 @@ import VideoPlayer from '../../components/VideoPlayer'
 import { teluguSpeeches } from '../../data/teluguSpeeches'
 import { englishSpeeches } from '../../data/englishSpeeches'
 import { bhajans } from '../../data/bhajans'
-import { videos } from '../../data/videos'
+import { videos } from '../../data/videos' // Ensure this import path is correct based on project structure
 import '../../components/AudioPlayer.css'
 import '../../components/VideoPlayer.css'
 
 function SpeechesVideos() {
   const [activeTab, setActiveTab] = useState('telugu')
 
+  const tabs = [
+    { id: 'telugu', label: 'Telugu Speeches' },
+    { id: 'english', label: 'English Speeches' },
+    { id: 'bhajans', label: 'Bhajans' },
+    { id: 'videos', label: 'Videos' }
+  ]
+
   return (
-    <div className="container bg-transparant p-sm-2 p-md-5" style={{ paddingBottom: '80px' }}>
-      {/* Audio Player */}
-      {activeTab === 'telugu' && (
-        <AudioPlayer songs={teluguSpeeches} title="Telugu Speeches" />
-      )}
+    <div className="media-page-container" style={{ minHeight: '100vh', paddingBottom: '40px' }}>
 
-      {activeTab === 'english' && (
-        <AudioPlayer songs={englishSpeeches} title="English Speeches" />
-      )}
-
-      {activeTab === 'bhajans' && (
-        <AudioPlayer songs={bhajans} title="Bhajans" />
-      )}
-
-      {activeTab === 'videos' && (
-        <VideoPlayer videos={videos} />
-      )}
-
-      {/* Hidden audio element */}
-      <audio
-        ref={(audio) => {
-          // This will be managed by AudioPlayer component
-        }}
-        style={{ display: 'none' }}
-      />
-
-      {/* Fixed Bottom Navigation */}
-      <nav className="navbar fixed-bottom" style={{ backgroundColor: 'transparent', border: 'none' }}>
-        <div className="cont_principal">
-          <div className="cont_breadcrumbs">
-            <div className="cont_breadcrumbs_3">
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexWrap: 'wrap' }}>
-                <li>
-                  <a
-                    className={activeTab === 'telugu' ? 'aHere' : ''}
-                    href="#telugu"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setActiveTab('telugu')
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }}
-                  >
-                    తెలుగు ప్రసంగములు
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className={activeTab === 'english' ? 'aHere' : ''}
-                    href="#english"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setActiveTab('english')
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }}
-                  >
-                    English Sp.&nbsp;
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className={activeTab === 'bhajans' ? 'aHere' : ''}
-                    href="#bhajans"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setActiveTab('bhajans')
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }}
-                  >
-                    Bhajans
-                  </a>
-                </li>
-                <li>
-                  <a
-                    className={activeTab === 'videos' ? 'aHere' : ''}
-                    href="#videos"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      setActiveTab('videos')
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }}
-                  >
-                    Videos&nbsp;&nbsp;
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#top"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      window.scrollTo({ top: 0, behavior: 'smooth' })
-                    }}
-                  >
-                    Go To Top&nbsp;&nbsp;
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+      {/* Top Navigation */}
+      <div className="media-nav-container" style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        background: 'transparent',
+      }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={{
+                padding: '10px 20px',
+                border: 'none',
+                borderRadius: '25px',
+                background: activeTab === tab.id ? '#3498db' : 'transparent',
+                color: activeTab === tab.id ? '#ffffff' : '#555',
+                fontWeight: '600',
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: activeTab === tab.id ? '0 4px 15px rgba(52, 152, 219, 0.3)' : 'none'
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
-      </nav>
+      </div>
+
+      <div className="container p-sm-2 p-md-4">
+        <div style={{ marginTop: '20px', animation: 'fadeIn 0.5s ease' }}>
+          {activeTab === 'telugu' && (
+            <AudioPlayer songs={teluguSpeeches} title="Telugu Speeches" />
+          )}
+
+          {activeTab === 'english' && (
+            <AudioPlayer songs={englishSpeeches} title="English Speeches" />
+          )}
+
+          {activeTab === 'bhajans' && (
+            <AudioPlayer songs={bhajans} title="Bhajans" />
+          )}
+
+          {activeTab === 'videos' && (
+            <VideoPlayer videos={videos} />
+          )}
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .media-page-container {
+            font-family: 'Inter', sans-serif;
+        }
+      `}</style>
     </div>
   )
 }
