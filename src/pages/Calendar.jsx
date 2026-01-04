@@ -1,6 +1,6 @@
 function Calendar() {
   return (
-    <div>
+    <>
       <div className="table-responsive">
         <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
           <tbody>
@@ -304,7 +304,7 @@ function Calendar() {
         <br />
         <br />
       </div>
-    </div>
+    </>
   )
 }
 

@@ -84,7 +84,7 @@ function Magazine() {
           <tbody>
             <tr>
               <td>
-                <div className="card magazineCard724 mx-auto text-bg-primary mb-3" style={{maxWidth: '60%'}}>
+                <div className="card magazineCard724 mx-auto mb-3" style={{maxWidth: '60%'}}>
                   <div className="card-header PageHeadingBS1">Saibaba Magazine</div>
                   <div className="card-body">
                     <img className="img-fluid" src="/images/pages/magazines301224.jpg" alt="Magazine" />
@@ -113,7 +113,7 @@ function Magazine() {
       <div className="container bg-transparant pt-sm-2 pt-md-3">
         <div className="container bg-transparant pt-sm-2 pt-md-3">
           <div className="accordion accordion-flush" id="accordionFlusA1">
-            {Object.keys(magazineIssues).map((year) => (
+            {Object.keys(magazineIssues).sort((a, b) => b - a).map((year) => (
               <div className="accordion-item" key={year}>
                 <h2 className="accordion-header" id={`flush-heading${year}`}>
                   <button

@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 function Photos() {
   const [activeGallery, setActiveGallery] = useState(1)
+  const [selectedImageIndex, setSelectedImageIndex] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const galleries = [
     { id: 1, name: 'Early Years [15]', count: 15 },
@@ -32,6 +34,58 @@ function Photos() {
     { thumb: '/images/Photos/1 Early Years/C14.jpg', full: '/images/Photos/1 Early Years/CI14.jpg' },
   ]
 
+  const currentPhotos = activeGallery === 1 ? gallery1Photos : []
+
+  const openModal = (index) => {
+    setSelectedImageIndex(index)
+    setIsModalOpen(true)
+    document.body.style.overflow = 'hidden' // Prevent background scrolling
+  }
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false)
+    setSelectedImageIndex(null)
+    document.body.style.overflow = 'unset' // Restore scrolling
+  }, [])
+
+  const goToPrevious = useCallback(() => {
+    setSelectedImageIndex((prevIndex) => {
+      if (prevIndex > 0) {
+        return prevIndex - 1
+      } else {
+        return currentPhotos.length - 1
+      }
+    })
+  }, [currentPhotos.length])
+
+  const goToNext = useCallback(() => {
+    setSelectedImageIndex((prevIndex) => {
+      if (prevIndex < currentPhotos.length - 1) {
+        return prevIndex + 1
+      } else {
+        return 0
+      }
+    })
+  }, [currentPhotos.length])
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    if (!isModalOpen) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        closeModal()
+      } else if (e.key === 'ArrowLeft') {
+        goToPrevious()
+      } else if (e.key === 'ArrowRight') {
+        goToNext()
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isModalOpen, goToPrevious, goToNext, closeModal])
+
   return (
     <div>
       <div className="table-responsive">
@@ -58,7 +112,7 @@ function Photos() {
                   setActiveGallery(gallery.id)
                 }}
               >
-                {gallery.name} {gallery.count > 0 && `[${gallery.count}]`}
+                {gallery.name}
               </a>
             </li>
           ))}
@@ -74,11 +128,48 @@ function Photos() {
           <div className="row">
             {gallery1Photos.map((photo, index) => (
               <div key={index} className="col-md-3 mb-4">
-                <a href={photo.full} target="_blank" rel="noopener noreferrer">
+                <div
+                  className="photo-thumbnail"
+                  onClick={() => openModal(index)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <img src={photo.thumb} alt={`Photo ${index + 1}`} className="img-fluid img-thumbnail" />
-                </a>
+                </div>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
+      {isModalOpen && selectedImageIndex !== null && currentPhotos[selectedImageIndex] && (
+        <div className="photo-lightbox-overlay" onClick={closeModal}>
+          <div className="photo-lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="photo-lightbox-close" onClick={closeModal} aria-label="Close">
+              ×
+            </button>
+            <div className="photo-lightbox-counter">
+              {selectedImageIndex + 1} / {currentPhotos.length}
+            </div>
+            <button
+              className="photo-lightbox-nav photo-lightbox-nav-left"
+              onClick={goToPrevious}
+              aria-label="Previous image"
+            >
+              ‹
+            </button>
+            <img
+              src={currentPhotos[selectedImageIndex].full}
+              alt={`Photo ${selectedImageIndex + 1}`}
+              className="photo-lightbox-image"
+            />
+            <button
+              className="photo-lightbox-nav photo-lightbox-nav-right"
+              onClick={goToNext}
+              aria-label="Next image"
+            >
+              ›
+            </button>
           </div>
         </div>
       )}
