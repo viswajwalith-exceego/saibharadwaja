@@ -20,8 +20,70 @@
 }
 
 /* Override Bootstrap's default table background */
+/* Override Bootstrap's default table background */
 .bodyFillGrad .table {
   background-color: transparent !important;
+}
+
+/* Sticky Photos Navigation */
+/* Sticky Photos Navigation */
+.photosNavigator {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: transparent;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  justify-content: center;
+}
+
+/* Hide scrollbar for cleaner look but keep functionality */
+.photosNavigator::-webkit-scrollbar {
+  height: 4px;
+}
+
+.photosNavigator::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.photosNavigator ul {
+  display: inline-flex;
+  /* Horizontal layout */
+  padding: 0 20px;
+  margin: 0;
+  list-style: none;
+}
+
+.photosNavigator li {
+  margin: 0 5px;
+}
+
+.photosNavigator a {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.photosNavigator a.active {
+  background-color: #3498db;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+  transform: none;
+}
+
+.photosNavigator a:hover:not(.active) {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: none;
 }
 
 /* Photo Lightbox Styles */
@@ -37,6 +99,17 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  animation: lightboxFadeIn 0.3s ease-out;
+}
+
+@keyframes lightboxFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .photo-lightbox-content {
@@ -55,22 +128,38 @@
   object-fit: contain;
   border: 2px solid #8b4513;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  animation: imagePopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes imagePopIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .photo-lightbox-close {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(0, 0, 0, 0.5); /* Added background for visibility if over bright image */
+  background: rgba(0, 0, 0, 0.5);
+  /* Added background for visibility if over bright image */
   border: none;
-  border-radius: 50%; /* Circle background */
+  border-radius: 50%;
+  /* Circle background */
   color: white;
   font-size: 30px;
   font-weight: bold;
   cursor: pointer;
   line-height: 1;
   padding: 0;
-  width: 44px; /* Slightly larger touch target */
+  width: 44px;
+  /* Slightly larger touch target */
   height: 44px;
   display: flex;
   align-items: center;
@@ -160,4 +249,3 @@
     max-height: 85vh;
   }
 }
-
