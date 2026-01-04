@@ -3,75 +3,53 @@ import React, { useState } from 'react'
 function Magazine() {
   const [expandedYear, setExpandedYear] = useState('2025')
 
-  const magazineIssues = {
-    2025: [
-      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2025.pdf', thumb: '/images/Magazines/2025December.jpg' },
-      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2025.pdf', thumb: '/images/Magazines/2025November.jpg' },
-      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2025.pdf', thumb: '/images/Magazines/2025October.jpg' },
-      { month: 'September', pdf: '/magazines/Saibaba_Magazine_September_2025.pdf', thumb: '/images/Magazines/2025September.jpg' },
-      { month: 'August', pdf: '/magazines/Saibaba_Magazine_August_2025.pdf', thumb: '/images/Magazines/2025August.jpg' },
-      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2025.pdf', thumb: '/images/Magazines/2025July.jpg' },
-      { month: 'June', pdf: '/magazines/Saibaba_Magazine_June_2025.pdf', thumb: '/images/Magazines/2025June.jpg' },
-      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2025.pdf', thumb: '/images/Magazines/2025May.jpg' },
-      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2025.pdf', thumb: '/images/Magazines/2025April.jpg' },
-      { month: 'March', pdf: '/magazines/Saibaba_Magazine_March_2025.pdf', thumb: '/images/Magazines/2025March.jpg' },
-      { month: 'February', pdf: '/magazines/Saibaba_Magazine_February_2025.pdf', thumb: '/images/Magazines/2025February.jpg' },
-      { month: 'January', pdf: '/magazines/Saibaba_Magazine_January_2025.pdf', thumb: '/images/Magazines/2025January.jpg' },
-    ],
-    2024: [
-      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2024.pdf', thumb: '/images/Magazines/2024December.jpg' },
-      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2024.pdf', thumb: '/images/Magazines/2024November.jpg' },
-      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2024.pdf', thumb: '/images/Magazines/2024October.jpg' },
-      { month: 'September', pdf: '/magazines/Saibaba_Magazine_September_2024.pdf', thumb: '/images/Magazines/2024September.jpg' },
-      { month: 'August', pdf: '/magazines/Saibaba_Magazine_August_2024.pdf', thumb: '/images/Magazines/2024August.jpg' },
-      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2024.pdf', thumb: '/images/Magazines/2024July.jpg' },
-      { month: 'June', pdf: '/magazines/Saibaba_Magazine_June_2024.pdf', thumb: '/images/Magazines/2024June.jpg' },
-      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2024.pdf', thumb: '/images/Magazines/2024May.jpg' },
-      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2024.pdf', thumb: '/images/Magazines/2024April.jpg' },
-      { month: 'March', pdf: '/magazines/Saibaba_Magazine_March_2024.pdf', thumb: '/images/Magazines/2024March.jpg' },
-      { month: 'February', pdf: '/magazines/Saibaba_Magazine_February_2024.pdf', thumb: '/images/Magazines/2024February.jpg' },
-      { month: 'January', pdf: '/magazines/Saibaba_Magazine_January_2024.pdf', thumb: '/images/Magazines/2024January.jpg' },
-    ],
-    2023: [
-      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2023.pdf', thumb: '/images/Magazines/2023December.jpg' },
-      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2023.pdf', thumb: '/images/Magazines/2023November.jpg' },
-      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2023.pdf', thumb: '/images/Magazines/2023October.jpg' },
-      { month: 'September', pdf: '/magazines/Saibaba_Magazine_September_2023.pdf', thumb: '/images/Magazines/2023September.jpg' },
-      { month: 'August', pdf: '/magazines/Saibaba_Magazine_August_2023.pdf', thumb: '/images/Magazines/2023August.jpg' },
-      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2023.pdf', thumb: '/images/Magazines/2023July.jpg' },
-      { month: 'June', pdf: '/magazines/Saibaba_Magazine_June_2023.pdf', thumb: '/images/Magazines/2023June.jpg' },
-      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2023.pdf', thumb: '/images/Magazines/2023May.jpg' },
-      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2023.pdf', thumb: '/images/Magazines/2023April.jpg' },
-      { month: 'March', pdf: '/magazines/Saibaba_Magazine_March_2023.pdf', thumb: '/images/Magazines/2023March.jpg' },
-      { month: 'February', pdf: '/magazines/Saibaba_Magazine_February_2023.pdf', thumb: '/images/Magazines/2023February.jpg' },
-      { month: 'January', pdf: '/magazines/Saibaba_Magazine_January_2023.pdf', thumb: '/images/Magazines/2023January.jpg' },
-    ],
-    2022: [
-      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2022.pdf', thumb: '/images/Magazines/2022December.jpg' },
-      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2022.pdf', thumb: '/images/Magazines/2022November.jpg' },
-      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2022.pdf', thumb: '/images/Magazines/2022October.jpg' },
-      { month: 'September', pdf: '/magazines/Saibaba_Magazine_September_2022.pdf', thumb: '/images/Magazines/2022September.jpg' },
-      { month: 'August', pdf: '/magazines/Saibaba_Magazine_August_2022.pdf', thumb: '/images/Magazines/2022August.jpg' },
-      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2022.pdf', thumb: '/images/Magazines/2022July.jpg' },
-      { month: 'June', pdf: '/magazines/Saibaba_Magazine_June_2022.pdf', thumb: '/images/Magazines/2022June.jpg' },
-      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2022.pdf', thumb: '/images/Magazines/2022May.jpg' },
-      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2022.pdf', thumb: '/images/Magazines/2022April.jpg' },
-      { month: 'March', pdf: '/magazines/Saibaba_Magazine_March_2022.pdf', thumb: '/images/Magazines/2022March.jpg' },
-      { month: 'February', pdf: '/magazines/Saibaba_Magazine_February_2022.pdf', thumb: '/images/Magazines/2022February.jpg' },
-      { month: 'January', pdf: '/magazines/Saibaba_Magazine_January_2022.pdf', thumb: '/images/Magazines/2022January.jpg' },
-    ],
-    2021: [
-      { month: 'December', pdf: '/magazines/Saibaba_Magazine_December_2021.pdf', thumb: '/images/Magazines/2021December.jpg' },
-      { month: 'November', pdf: '/magazines/Saibaba_Magazine_November_2021.pdf', thumb: '/images/Magazines/2021November.jpg' },
-      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2021.pdf', thumb: '/images/Magazines/2021October.jpg' },
-      { month: 'July', pdf: '/magazines/Saibaba_Magazine_July_2021.pdf', thumb: '/images/Magazines/2021July.jpg' },
-      { month: 'May', pdf: '/magazines/Saibaba_Magazine_May_2021.pdf', thumb: '/images/Magazines/2021May.jpg' },
-      { month: 'April', pdf: '/magazines/Saibaba_Magazine_April_2021.pdf', thumb: '/images/Magazines/2021April.jpg' },
-    ],
-    2019: [
-      { month: 'October', pdf: '/magazines/Saibaba_Magazine_October_2019.pdf', thumb: '/images/Magazines/2019October.jpg' },
-    ],
+  // Dynamic import of magazine files
+  const magazineFiles = import.meta.glob('../../../magazines/*.pdf', { eager: true, as: 'url' })
+
+  // Helper to parse file paths and build the data structure
+  const getMagazineData = () => {
+    const issues = {}
+    const monthsOrder = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+
+    Object.keys(magazineFiles).forEach((filePath) => {
+      // Extract filename from path (e.g., /magazines/Saibaba_Magazine_December_2025.pdf)
+      const fileName = filePath.split('/').pop()
+
+      // Regex to match "Saibaba_Magazine_[Month]_[Year].pdf" (case insensitive)
+      const match = fileName.match(/Saibaba_Magazine_([A-Za-z]+)_(\d{4})\.pdf$/i)
+
+      if (match) {
+        const [, month, year] = match
+        // Standardize month case (e.g., "december" -> "December")
+        const standardizedMonth = monthsOrder.find(m => m.toLowerCase() === month.toLowerCase()) || month
+
+        if (!issues[year]) {
+          issues[year] = []
+        }
+
+        issues[year].push({
+          month: standardizedMonth,
+          pdf: magazineFiles[filePath], // Use the URL resolved by Vite
+          // Construct thumbnail path dynamically: /images/Magazines/[Year][Month].jpg
+          thumb: `/images/Magazines/${year}${standardizedMonth}.jpg`
+        })
+      }
+    })
+
+    // Sort issues within each year by month (descending: Dec -> Jan)
+    Object.keys(issues).forEach(year => {
+      issues[year].sort((a, b) => {
+        return monthsOrder.indexOf(b.month) - monthsOrder.indexOf(a.month)
+      })
+    })
+
+    return issues
   }
+
+  const magazineIssues = getMagazineData()
 
   const renderIssues = (year) => {
     const issues = magazineIssues[year] || []
