@@ -8,7 +8,7 @@ function Home() {
                         <div className="col-lg-1"></div>
                         <div className="col-lg-10">
                             <div className="card text-center">
-                                    <img src="/images/Carosel/nyear2026.jpg" className="card-img-top" alt="..." />
+                                    <img src="/images/Carosel/16Jan26_2.jpg" className="card-img-top" alt="..." />
                             </div>
                         </div>
                         <div className="col-lg-1"></div>

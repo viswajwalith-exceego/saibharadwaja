@@ -1,0 +1,113 @@
+/*
+  Books Purchase Page Styles
+  Based on pages/sbbooks/css/sbbooks923.css and styles/Sborg923.css
+*/
+
+#books-list-container {
+  background-color: transparent;
+  margin: 20px auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Table Styles - Full Width */
+#books-list-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+#books-list-container table {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
+.ta {
+  text-align: left;
+}
+
+.textBooksListNPrices {
+  font-family: LatoRegBS, SurannaBS, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: normal;
+  color: #444444;
+  text-decoration: none;
+  text-align: left;
+}
+
+.textLatoBold10px {
+  font-family: LatoRegBS, SurannaBS, Arial, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  color: #444444;
+  text-decoration: none;
+  text-align: left;
+}
+
+.txtSmallNumber {
+  font-family: LatoRegBS, SurannaBS, Arial, sans-serif;
+  font-size: 8px;
+  font-weight: normal;
+  color: #444444;
+  text-decoration: none;
+  text-align: left;
+}
+
+.textDarkBlueLink7pt {
+  text-align: justify;
+  font-family: OswaldBS, MandaliBS, Arial, sans-serif;
+  font-size: 7pt;
+  font-weight: normal;
+  color: #103893;
+  text-decoration: none;
+  margin: 0;
+}
+
+.textDarkBlueLink7pt:hover {
+  text-decoration: underline;
+}
+
+.TitleColourNShadow1 {
+  font-family: LatoRegBS, OswaldBS, MandaliBS, Arial, sans-serif;
+  font-size: 8pt;
+  font-weight: bold;
+  color: #103893;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 0 0 1px 1px #f2e7e7;
+}
+
+/* Fixed Bottom Navigation */
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+
+.bg-warning.bg-opacity-100 {
+  background-color: #ffc107 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .w-80 {
+    width: 95%;
+  }
+
+  .textBooksListNPrices {
+    font-size: 9px;
+  }
+
+  .txtSmallNumber {
+    font-size: 7px;
+  }
+}
