@@ -1,11 +1,11 @@
 # React Router - Handle client-side routing
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
+  RewriteBase /New/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule . /New/index.html [L]
 </IfModule>
 
 # Enable Gzip Compression
@@ -20,9 +20,13 @@
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/gif "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType application/json "access plus 1 month"
+  ExpiresByType audio/mpeg "access plus 1 year"
+  ExpiresByType audio/mp3 "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
 </IfModule>
 
 # Security Headers
