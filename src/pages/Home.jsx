@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 function Home() {
     return (
         <div className="container w-75" id="divBody">
@@ -36,9 +38,9 @@ function Home() {
                         </div>
                         <div className="row p-0 m-1">
                             <div className="col">
-                                <a href="/magazine">
+                                <Link to="/magazine">
                                     <img className="img img-fluid" src="/images/DefaultPage/mob924menuMagazine2.jpg" alt="" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
@@ -52,17 +54,17 @@ function Home() {
 
                         <div className="row p-0 m-1">
                             <div className="col">
-                                <a href="/books/read/34">
+                                <Link to="/books/read/34">
                                     <img className="img img-fluid" src="/images/DefaultPage/mob924menuMaha2.jpg" alt="" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
                         <div className="row p-0 m-1">
                             <div className="col">
-                                <a href="/media/speeches-videos">
+                                <Link to="/media/speeches-videos">
                                     <img className="img img-fluid" src="/images/DefaultPage/mob924menuBhajans2.jpg" alt="" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -84,9 +86,9 @@ function Home() {
                                 </a>
                             </div>
                             <div className="col">
-                                <a href="/magazine">
+                                <Link to="/magazine">
                                     <img className="img img-fluid" src="/images/DefaultPage/mob924menuMagazine2.jpg" alt="" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div className="row">
@@ -100,14 +102,14 @@ function Home() {
                                 </a>
                             </div>
                             <div className="col">
-                                <a href="/books/read/34">
+                                <Link to="/books/read/34">
                                     <img className="img img-fluid" src="/images/DefaultPage/mob924menuMaha2.jpg" alt="" />
-                                </a>
+                                </Link>
                             </div>
                             <div className="col">
-                                <a href="/media/speeches-videos">
+                                <Link to="/media/speeches-videos">
                                     <img className="img img-fluid" src="/images/DefaultPage/mob924menuBhajans2.jpg" alt="" />
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
