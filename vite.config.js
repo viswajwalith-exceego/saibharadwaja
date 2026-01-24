@@ -84,7 +84,10 @@ function serveRootAssets() {
 // Helper function to recursively get all files matching a pattern
 function getFilesRecursive(dir, pattern, baseDir = dir) {
   const files = []
-  if (!existsSync(dir)) return files
+  if (!existsSync(dir)) {
+    console.warn(`[vite-plugin] Directory not found: ${dir}`)
+    return files
+  }
   
   try {
     const entries = readdirSync(dir, { withFileTypes: true })
@@ -93,6 +96,7 @@ function getFilesRecursive(dir, pattern, baseDir = dir) {
       const fullPath = join(dir, entry.name)
       
       if (entry.isDirectory()) {
+        // Always recurse into subdirectories for ** patterns
         files.push(...getFilesRecursive(fullPath, pattern, baseDir))
       } else if (entry.isFile()) {
         const relativePath = relative(baseDir, fullPath).replace(/\\/g, '/')
@@ -103,7 +107,7 @@ function getFilesRecursive(dir, pattern, baseDir = dir) {
       }
     }
   } catch (err) {
-    // Ignore errors
+    console.warn(`[vite-plugin] Error reading directory ${dir}:`, err.message)
   }
   
   return files
@@ -121,13 +125,28 @@ function matchesPattern(path, pattern) {
   })
   
   // Convert glob pattern to regex
+  // For recursive patterns like **/*.jpg, we've already removed the **/ prefix
+  // So we just need to match the filename pattern against the end of the path
+  // e.g., pattern "*.{jpg,png}" should match "folder/subfolder/file.jpg"
   regexPattern = regexPattern
-    .replace(/\*\*/g, '.*')  // ** matches any path
-    .replace(/\*/g, '[^/]*')  // * matches any filename
+    .replace(/\*\*/g, '.*')  // ** matches any path (including slashes) - though we handle this separately
+    .replace(/\*/g, '[^/]*')  // * matches any filename (but not slashes)
     .replace(/\./g, '\\.')    // Escape dots
   
-  const regex = new RegExp(`^${regexPattern}$`, 'i')
-  return regex.test(path)
+  // For patterns like "*.{jpg,png}", match against the filename (last part of path)
+  // For patterns with path components, match the full relative path
+  const pathParts = path.split('/')
+  const fileName = pathParts[pathParts.length - 1]
+  
+  // Try matching against filename first (for patterns like *.jpg)
+  const fileNameRegex = new RegExp(`^${regexPattern}$`, 'i')
+  if (fileNameRegex.test(fileName)) {
+    return true
+  }
+  
+  // Also try matching against full path (for patterns with subdirectories)
+  const fullPathRegex = new RegExp(`^${regexPattern}$`, 'i')
+  return fullPathRegex.test(path)
 }
 
 // Plugin to prevent root assets from being bundled during build
@@ -142,6 +161,9 @@ function excludeRootAssetsFromBuild() {
       if (!id.includes('src/') || !code.includes('import.meta.glob')) {
         return null
       }
+      
+      // This transform should work in both dev and build modes
+      // Vite processes import.meta.glob() early, so we need to intercept it
       
       // Check if this file uses import.meta.glob with root assets
       const rootAssetPattern = new RegExp(
@@ -180,26 +202,35 @@ function excludeRootAssetsFromBuild() {
         
         // Build the full pattern - handle ** for recursive
         let fullPattern = pathPattern
-        if (prefix.includes('..')) {
-          // Calculate how many levels up
-          const levels = (prefix.match(/\.\./g) || []).length
-          // For root folders, we're already at the right level
-          fullPattern = pathPattern
+        // For ** patterns, we need to match files in any subdirectory
+        // Remove leading **/ if present (we'll handle recursion in getFilesRecursive)
+        if (fullPattern.startsWith('**/')) {
+          fullPattern = fullPattern.substring(3)
         }
+        // For recursive patterns, we need to match files at any depth
+        // The pattern after **/ should match the filename pattern
+        // e.g., **/*.{jpg,png} should match any .jpg or .png file in any subdirectory
         
         const rootFolderPath = resolve(projectRoot, folder)
         
         // Get all matching files at build time
+        // For ** patterns, we always recurse, and match against the filename pattern
         const matchingFiles = getFilesRecursive(rootFolderPath, fullPattern, rootFolderPath)
         
+        console.log(`[vite-plugin] Found ${matchingFiles.length} files matching pattern ${pathPattern} in ${folder}`)
+        
         // Generate the object with root-relative paths
-        // The key should match what import.meta.glob would return
+        // The key should match what import.meta.glob would return (original import path format)
         const entries = matchingFiles.map(file => {
           const rootRelativePath = `/${folder}/${file}`
-          // The key format should match the original import path
-          // import.meta.glob('../../../magazines/*.pdf') returns keys like '../../../magazines/file.pdf'
+          // The key format must match the original import path exactly
+          // import.meta.glob('../../../images/Photos/**/*.jpg') returns keys like '../../../images/Photos/folder/file.jpg'
+          // We need to preserve this format for the code to work correctly
           const key = `${prefix}/${folder}/${file}`.replace(/\\/g, '/')
-          return `  '${key}': '${rootRelativePath}'`
+          // Escape single quotes in paths
+          const escapedKey = key.replace(/'/g, "\\'")
+          const escapedValue = rootRelativePath.replace(/'/g, "\\'")
+          return `  '${escapedKey}': '${escapedValue}'`
         }).join(',\n')
         
         // Return the object directly (for eager) or a function (for lazy)
