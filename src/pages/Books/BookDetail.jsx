@@ -33,10 +33,19 @@ function BookDetail() {
   }
 
   // Logic to determine image URL based on book folder and page number
-  // Convention: /images/Books/{folderName}/page{001}.jpg
+  // Convention: /images/Books/{folderName}/{prefix}{pageNumber}.jpg
+  // e.g., /images/Books/edinijam/edn0.jpg, /images/Books/matamenduku/mte0.jpg
   const getPageUrl = (page) => {
     if (!book) return ''
-    return `/images/Books/${book.folderName}/page${page.toString().padStart(3, '0')}.jpg`
+    // Page numbers are 0-indexed in file names (edn0.jpg = page 1, edn1.jpg = page 2, etc.)
+    const fileNumber = page - 1
+    const prefix = book.filePrefix || 'page' // Fallback to 'page' if prefix not defined
+    // If prefix is 'page', use 3-digit zero-padded format, otherwise use the prefix format
+    if (prefix === 'page') {
+      return `/images/Books/${book.folderName}/page${page.toString().padStart(3, '0')}.jpg`
+    } else {
+      return `/images/Books/${book.folderName}/${prefix}${fileNumber}.jpg`
+    }
   }
 
   if (!book) {

@@ -39,6 +39,8 @@
   -webkit-overflow-scrolling: touch;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 /* Hide scrollbar for cleaner look but keep functionality */
@@ -55,8 +57,10 @@
   display: inline-flex;
   /* Horizontal layout */
   padding: 0 20px;
-  margin: 0;
+  margin: 0 auto;
   list-style: none;
+  justify-content: center;
+  align-items: center;
 }
 
 .photosNavigator li {
@@ -79,6 +83,7 @@
   color: #ffffff;
   box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
   transform: none;
+  text-align: center;
 }
 
 .photosNavigator a:hover:not(.active) {

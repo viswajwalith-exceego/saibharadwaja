@@ -4,20 +4,47 @@ function Photos() {
     const [selectedImageIndex, setSelectedImageIndex] = useState(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // Dynamic import of photos
-    const photoFiles = import.meta.glob('../../../images/Photos/**/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG}', { eager: true, as: 'url' })
+    // Dynamic import of photos - exclude unitegallery folder
+    // Pattern: match files in numbered gallery folders (1 Early Years, 2 Family, etc.)
+    // In dev mode, Vite handles this natively and returns URLs
+    // In build mode, the plugin transforms this to root-relative paths
+    const photoFiles = import.meta.glob('../../../images/Photos/**/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG}', { 
+        eager: true, 
+        as: 'url'
+    })
+    
+    // Debug: Log what import.meta.glob returns
+    console.log('[Photos] import.meta.glob returned:', Object.keys(photoFiles).length, 'files')
+    if (Object.keys(photoFiles).length > 0) {
+        const firstKey = Object.keys(photoFiles)[0]
+        console.log('[Photos] First key:', firstKey)
+        console.log('[Photos] First value:', photoFiles[firstKey])
+    }
 
     // Transform imported files into gallery structure
     const getGalleryData = () => {
         const galleriesMap = {}
 
         Object.keys(photoFiles).forEach((path) => {
-            const parts = path.split('/')
+            // Normalize path to handle any double slashes or path issues
+            const normalizedPath = path.replace(/\/+/g, '/')
+            const parts = normalizedPath.split('/').filter(p => p && p !== '.') // Filter out empty and current dir parts
             const fileName = parts.pop()
             const folderName = parts.pop()
+            
+            // Safety check
+            if (!fileName || !folderName) {
+                console.warn(`[Photos] Skipping invalid path: ${path} (fileName: ${fileName}, folderName: ${folderName})`)
+                return
+            }
 
             // Skip files in the root Photos folder if they don't belong to a gallery (or handle them if needed)
             // For now we assume gallery folders start with a number like "1 Early Years"
+            // Also skip unitegallery folder
+            if (path.includes('unitegallery') || path.includes('UniteGallery')) {
+                return
+            }
+            
             let galleryId = 999
             let galleryName = folderName
 
@@ -71,10 +98,17 @@ function Photos() {
                 galleriesMap[galleryId].photosMap[photoKey] = { thumb: null, full: null, sortNum: sortNum }
             }
 
+            // Get the photo URL - use original path as key
+            const photoUrl = photoFiles[path] || photoFiles[normalizedPath]
+            if (!photoUrl) {
+                console.warn(`[Photos] No URL found for path: ${path}`)
+                return
+            }
+            
             if (isFull) {
-                galleriesMap[galleryId].photosMap[photoKey].full = photoFiles[path]
+                galleriesMap[galleryId].photosMap[photoKey].full = photoUrl
             } else {
-                galleriesMap[galleryId].photosMap[photoKey].thumb = photoFiles[path]
+                galleriesMap[galleryId].photosMap[photoKey].thumb = photoUrl
             }
         })
 
@@ -82,6 +116,12 @@ function Photos() {
         const sortedGalleries = Object.values(galleriesMap).sort((a, b) => a.id - b.id)
 
         return sortedGalleries.map(g => {
+            // Safety check - ensure photosMap exists
+            if (!g || !g.photosMap) {
+                console.warn(`[Photos] Gallery missing photosMap:`, g)
+                return null
+            }
+            
             const photos = Object.values(g.photosMap).map(p => ({
                 thumb: p.thumb || p.full, // Fallback to full if no thumb
                 full: p.full || p.thumb,   // Fallback to thumb if no full
@@ -94,11 +134,37 @@ function Photos() {
                 count: photos.length,
                 photos: photos
             }
-        })
+        }).filter(g => g !== null) // Filter out any null galleries
     }
 
     // Memoize data to avoid recalculation on every render (though typically fine purely clientside)
     const galleries = getGalleryData()
+
+    // Debug: Log photo files and galleries
+    useEffect(() => {
+        const fileCount = Object.keys(photoFiles).length
+        console.log('Photo files count:', fileCount)
+        if (fileCount > 0) {
+            console.log('Photo files sample keys:', Object.keys(photoFiles).slice(0, 5))
+            console.log('Photo files sample values:', Object.keys(photoFiles).slice(0, 5).map(k => photoFiles[k]))
+        } else {
+            console.warn('No photo files found!')
+            console.warn('This might be because:')
+            console.warn('1. The plugin transform is interfering with Vite\'s native import.meta.glob')
+            console.warn('2. The file paths are incorrect')
+            console.warn('3. The images folder structure doesn\'t match the pattern')
+            console.warn('Photo files object:', photoFiles)
+        }
+        console.log('Galleries:', galleries)
+        if (galleries.length > 0) {
+            const firstGallery = galleries[0]
+            console.log('First gallery:', firstGallery.name, 'with', firstGallery.photos.length, 'photos')
+            if (firstGallery.photos.length > 0) {
+                console.log('First photo thumb:', firstGallery.photos[0].thumb)
+                console.log('First photo full:', firstGallery.photos[0].full)
+            }
+        }
+    }, [photoFiles, galleries])
 
     // Initialize active gallery with the first one available
     const [activeGallery, setActiveGallery] = useState(galleries.length > 0 ? galleries[0].id : 1)

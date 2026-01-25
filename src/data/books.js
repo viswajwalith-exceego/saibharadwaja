@@ -5,6 +5,7 @@ export const books = [
         engName: 'Edi Nijam',
         thumb: '/images/Books/thumbImages/edinijamthumb.jpg',
         folderName: 'edinijam',
+        filePrefix: 'edn', // File naming: edn0.jpg, edn1.jpg, etc.
         totalPages: 50 // Placeholder, adjusting logic to auto-detect would be ideal but hard in client-side only without index
     },
     {
@@ -13,6 +14,7 @@ export const books = [
         engName: 'Matham Enduku',
         thumb: '/images/Books/thumbImages/matamendukuthumb.jpg',
         folderName: 'matamenduku',
+        filePrefix: 'mte', // File naming: mte0.jpg, mte1.jpg, etc.
         totalPages: 50
     },
     {

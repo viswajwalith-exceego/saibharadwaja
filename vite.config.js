@@ -44,6 +44,13 @@ function serveRootAssets() {
           return next()
         }
         
+        // Redirect old /Photos/ path (capital P) to React route
+        if (url.startsWith('/Photos/') || url === '/Photos') {
+          res.writeHead(301, { Location: '/New/media/photos' })
+          res.end()
+          return
+        }
+        
         // Serve root assets from root level
         for (const folder of rootAssetFolders) {
           if (url.startsWith(`/${folder}/`)) {
@@ -139,6 +146,7 @@ function matchesPattern(path, pattern) {
   const fileName = pathParts[pathParts.length - 1]
   
   // Try matching against filename first (for patterns like *.jpg)
+  // Pattern like "*.{jpg,png}" becomes "^.*\\.(jpg|png)$"
   const fileNameRegex = new RegExp(`^${regexPattern}$`, 'i')
   if (fileNameRegex.test(fileName)) {
     return true
@@ -146,7 +154,11 @@ function matchesPattern(path, pattern) {
   
   // Also try matching against full path (for patterns with subdirectories)
   const fullPathRegex = new RegExp(`^${regexPattern}$`, 'i')
-  return fullPathRegex.test(path)
+  if (fullPathRegex.test(path)) {
+    return true
+  }
+  
+  return false
 }
 
 // Plugin to prevent root assets from being bundled during build
@@ -156,11 +168,48 @@ function excludeRootAssetsFromBuild() {
   
   return {
     name: 'exclude-root-assets-from-build',
-    transform(code, id) {
+    enforce: 'pre', // Run before other plugins to intercept import.meta.glob early
+    buildStart() {
+      // Log when build starts to verify plugin is running
+      console.log('[vite-plugin] Build started - excludeRootAssetsFromBuild plugin active')
+      console.log('[vite-plugin] Project root:', process.cwd())
+      // Verify images folder exists
+      const imagesPath = resolve(process.cwd(), 'images')
+      console.log('[vite-plugin] Images folder exists:', existsSync(imagesPath))
+      if (existsSync(imagesPath)) {
+        const photosPath = resolve(imagesPath, 'Photos')
+        console.log('[vite-plugin] Photos folder exists:', existsSync(photosPath))
+        if (existsSync(photosPath)) {
+          try {
+            const dirs = readdirSync(photosPath, { withFileTypes: true })
+              .filter(d => d.isDirectory())
+              .map(d => d.name)
+            console.log('[vite-plugin] Photo gallery folders:', dirs.slice(0, 5))
+          } catch (e) {
+            console.warn('[vite-plugin] Could not read Photos folder:', e.message)
+          }
+        }
+      }
+    },
+    transform(code, id, options) {
       // Only process source files
       if (!id.includes('src/') || !code.includes('import.meta.glob')) {
         return null
       }
+      
+      // Check if we're in build mode
+      // In build mode, we need to transform import.meta.glob to use root-relative paths
+      // In dev mode, let Vite handle it natively
+      const isBuild = process.argv.includes('build') || process.env.NODE_ENV === 'production'
+      const isDev = !isBuild
+      
+      if (isDev) {
+        // In dev mode, don't transform - let Vite handle it natively
+        // The serveRootAssets middleware will serve the files correctly
+        return null
+      }
+      
+      console.log(`[vite-plugin] BUILD MODE: Processing import.meta.glob in file: ${id}`)
       
       // This transform should work in both dev and build modes
       // Vite processes import.meta.glob() early, so we need to intercept it
@@ -179,12 +228,44 @@ function excludeRootAssetsFromBuild() {
       const projectRoot = process.cwd()
       
       // Match all import.meta.glob() calls for root assets
+      // Pattern: import.meta.glob('../../../images/Photos/**/*.jpg', ...)
+      // We need to match: prefix (../../../), folder (images), optional subfolder (Photos), pattern (**/*.jpg)
+      // The pattern can be: images/Photos/**/*.jpg or images/**/*.jpg
+      // Use word boundaries to ensure we match the exact folder name, not a substring
+      // The regex needs to handle: prefix/folder/subfolder/pattern or prefix/folder/pattern
       const globPattern = new RegExp(
-        `import\\.meta\\.glob\\(['"]([^'"]*)/(${rootAssetFolders.join('|')})/([^'"]+)['"]([^)]*)\\)`,
+        `import\\.meta\\.glob\\(['"]([^'"]*)/(${rootAssetFolders.map(f => `\\b${f}\\b`).join('|')})(?:/([^/'"*]+))?/([^'"]+)['"]([^)]*)\\)`,
         'gi'
       )
       
-      transformedCode = transformedCode.replace(globPattern, (match, prefix, folder, pathPattern, optionsStr) => {
+      // Debug: Log what we're trying to match
+      if (code.includes('images/Photos')) {
+        console.log(`[vite-plugin] Code contains 'images/Photos', testing pattern match...`)
+      }
+      
+      let replacementCount = 0
+      transformedCode = transformedCode.replace(globPattern, (match, prefix, folder, subfolder, pathPattern, optionsStr) => {
+        replacementCount++
+        console.log(`[vite-plugin] Matched import.meta.glob pattern: ${match.substring(0, 80)}...`)
+        console.log(`[vite-plugin] Prefix: ${prefix}, Folder: ${folder}, Subfolder: ${subfolder || '(none)'}, PathPattern: ${pathPattern}`)
+        
+        // Fix: If prefix ends with a root asset folder name, it means we matched incorrectly
+        // e.g., if prefix is "../../../images" and folder is "Photos", we need to fix this
+        const prefixParts = prefix.split('/').filter(p => p)
+        const lastPrefixPart = prefixParts[prefixParts.length - 1]
+        if (rootAssetFolders.includes(lastPrefixPart) && folder !== lastPrefixPart) {
+          // The prefix incorrectly includes the folder name
+          // e.g., prefix="../../../images", folder="Photos" should be prefix="../../..", folder="images", subfolder="Photos"
+          console.log(`[vite-plugin] Fixing incorrect match: prefix includes folder name`)
+          const correctedPrefix = prefixParts.slice(0, -1).join('/') + (prefixParts.length > 1 ? '/' : '') + (prefix.startsWith('/') ? '' : '')
+          const correctedFolder = lastPrefixPart
+          const correctedSubfolder = folder
+          console.log(`[vite-plugin] Corrected: Prefix: ${correctedPrefix}, Folder: ${correctedFolder}, Subfolder: ${correctedSubfolder}`)
+          // Update variables
+          prefix = correctedPrefix || '../../..'
+          folder = correctedFolder
+          subfolder = correctedSubfolder
+        }
         // Parse options safely
         let isEager = false
         let asType = 'url'
@@ -215,18 +296,123 @@ function excludeRootAssetsFromBuild() {
         
         // Get all matching files at build time
         // For ** patterns, we always recurse, and match against the filename pattern
-        const matchingFiles = getFilesRecursive(rootFolderPath, fullPattern, rootFolderPath)
+        // Note: The pattern might be like "Photos/**/*.jpg" or subfolder might be extracted from regex
+        let searchPath = rootFolderPath
+        let filePattern = fullPattern
+        let subfolderPrefix = ''
         
-        console.log(`[vite-plugin] Found ${matchingFiles.length} files matching pattern ${pathPattern} in ${folder}`)
+        // If we have a subfolder from the regex match (e.g., "Photos" from "images/Photos/**/*.jpg")
+        if (subfolder) {
+          searchPath = resolve(rootFolderPath, subfolder)
+          subfolderPrefix = subfolder
+          console.log(`[vite-plugin] Using subfolder from regex: ${subfolder}, searchPath: ${searchPath}`)
+          // The pathPattern should already be the pattern after the subfolder
+          // e.g., "**/*.{jpg,png}" from "images/Photos/**/*.{jpg,png}"
+          if (filePattern.startsWith('**/')) {
+            filePattern = filePattern.substring(3) // Remove "**/" prefix
+          }
+          console.log(`[vite-plugin] File pattern after subfolder: ${filePattern}`)
+        } else if (pathPattern.includes('/') && !pathPattern.startsWith('**/')) {
+          // Fallback: If pathPattern includes a subfolder (e.g., "Photos/**/*.jpg"), extract it
+          const pathParts = pathPattern.split('/')
+          const extractedSubfolder = pathParts[0]
+          if (extractedSubfolder && extractedSubfolder !== '**') {
+            searchPath = resolve(rootFolderPath, extractedSubfolder)
+            subfolderPrefix = extractedSubfolder
+            console.log(`[vite-plugin] Extracted subfolder from pathPattern: ${extractedSubfolder}, searchPath: ${searchPath}`)
+            filePattern = pathParts.slice(1).join('/')
+            if (filePattern.startsWith('**/')) {
+              filePattern = filePattern.substring(3)
+            }
+            console.log(`[vite-plugin] File pattern after extraction: ${filePattern}`)
+          }
+        } else if (pathPattern.startsWith('**/')) {
+          // Pattern is just "**/*.{jpg,png}" - search in rootFolderPath
+          filePattern = pathPattern.substring(3)
+          console.log(`[vite-plugin] Pattern starts with **/, using rootFolderPath: ${rootFolderPath}`)
+        }
+        
+        // Check if searchPath exists
+        if (!existsSync(searchPath)) {
+          console.error(`[vite-plugin] ERROR: Search path does not exist: ${searchPath}`)
+          console.error(`[vite-plugin] Project root: ${projectRoot}`)
+          console.error(`[vite-plugin] Folder: ${folder}, Subfolder: ${subfolderPrefix}`)
+          console.error(`[vite-plugin] Root folder path: ${rootFolderPath}`)
+          // Try to list what's actually in the root folder
+          if (existsSync(rootFolderPath)) {
+            try {
+              const dirContents = readdirSync(rootFolderPath)
+              console.error(`[vite-plugin] Contents of ${rootFolderPath}:`, dirContents.slice(0, 10))
+            } catch (e) {
+              console.error(`[vite-plugin] Could not read directory:`, e.message)
+            }
+          }
+          // Return original match so Vite can handle it, but this will likely fail
+          // Better to return empty object so the app doesn't crash
+          if (isEager) {
+            return `{}`
+          } else {
+            return `(() => ({}))()`
+          }
+        }
+        
+        console.log(`[vite-plugin] Searching in: ${searchPath} for pattern: ${filePattern}`)
+        console.log(`[vite-plugin] Search path exists: ${existsSync(searchPath)}`)
+        
+        if (!existsSync(searchPath)) {
+          console.error(`[vite-plugin] ERROR: Search path does not exist: ${searchPath}`)
+          console.error(`[vite-plugin] Project root: ${projectRoot}`)
+          console.error(`[vite-plugin] Root folder path: ${rootFolderPath}`)
+          if (isEager) {
+            return `{}`
+          } else {
+            return `(() => ({}))()`
+          }
+        }
+        
+        const matchingFiles = getFilesRecursive(searchPath, filePattern, searchPath)
+        console.log(`[vite-plugin] Found ${matchingFiles.length} matching files before filtering`)
+        if (matchingFiles.length > 0) {
+          console.log(`[vite-plugin] Sample files found:`, matchingFiles.slice(0, 5))
+        } else {
+          console.warn(`[vite-plugin] WARNING: No files found! This will result in empty object.`)
+          console.warn(`[vite-plugin] The post-build script should fix this, but check file paths.`)
+        }
+        
+        // Filter out unitegallery and other non-photo assets
+        const filteredFiles = matchingFiles.filter(file => {
+          // Exclude unitegallery assets
+          if (file.includes('unitegallery') || file.includes('UniteGallery')) return false
+          // For Photos folder, only include actual photo galleries (folders with numbers)
+          if (folder === 'images' && subfolderPrefix === 'Photos') {
+            // Exclude files directly in Photos root
+            const parts = file.split('/')
+            if (parts.length === 0) return false
+            // Check if it's in a numbered gallery folder (e.g., "1 Early Years", "2 Family")
+            const galleryFolder = parts[0]
+            if (!galleryFolder || !/^\d+\s+/.test(galleryFolder)) {
+              return false
+            }
+          }
+          return true
+        })
+        
+        console.log(`[vite-plugin] Found ${filteredFiles.length} files matching pattern ${pathPattern} in ${folder} (filtered from ${matchingFiles.length})`)
+        if (filteredFiles.length === 0 && matchingFiles.length > 0) {
+          console.warn(`[vite-plugin] All files were filtered out. Sample files:`, matchingFiles.slice(0, 3))
+        }
         
         // Generate the object with root-relative paths
         // The key should match what import.meta.glob would return (original import path format)
-        const entries = matchingFiles.map(file => {
-          const rootRelativePath = `/${folder}/${file}`
+        const entries = filteredFiles.map(file => {
+          // Build the correct path: include subfolder prefix if we searched in a subfolder
+          const relativePath = subfolderPrefix ? `${subfolderPrefix}/${file}` : file
+          // Ensure the path starts with the folder (e.g., /images/Photos/...)
+          const rootRelativePath = `/${folder}/${relativePath}`
           // The key format must match the original import path exactly
           // import.meta.glob('../../../images/Photos/**/*.jpg') returns keys like '../../../images/Photos/folder/file.jpg'
           // We need to preserve this format for the code to work correctly
-          const key = `${prefix}/${folder}/${file}`.replace(/\\/g, '/')
+          const key = `${prefix}/${folder}/${relativePath}`.replace(/\\/g, '/')
           // Escape single quotes in paths
           const escapedKey = key.replace(/'/g, "\\'")
           const escapedValue = rootRelativePath.replace(/'/g, "\\'")
@@ -234,6 +420,16 @@ function excludeRootAssetsFromBuild() {
         }).join(',\n')
         
         // Return the object directly (for eager) or a function (for lazy)
+        if (filteredFiles.length === 0) {
+          console.warn(`[vite-plugin] WARNING: No files found for pattern ${pathPattern} in ${folder}. Search path: ${searchPath}, File pattern: ${filePattern}`)
+          // Return empty object but don't fail
+          if (isEager) {
+            return `{}`
+          } else {
+            return `(() => ({}))()`
+          }
+        }
+        
         if (isEager) {
           return `{\n${entries}\n}`
         } else {
@@ -241,21 +437,39 @@ function excludeRootAssetsFromBuild() {
         }
       })
       
+      if (replacementCount > 0) {
+        console.log(`[vite-plugin] Transformed ${replacementCount} import.meta.glob call(s) in ${id}`)
+      }
+      
       return transformedCode !== code ? { code: transformedCode, map: null } : null
     },
     generateBundle(options, bundle) {
       // Remove bundled assets from root folders
+      // BUT: Don't delete CSS/JS files that are part of the React app bundle
       const rootAssetFoldersSet = new Set(rootAssetFolders)
       
       for (const fileName in bundle) {
         const chunk = bundle[fileName]
         
         if (chunk.type === 'asset') {
-          // Check if this asset is from a root folder
+          // NEVER delete CSS or JS files - these are always part of the React app bundle
+          // CSS files are bundled by Vite and should always be included
+          if (fileName.endsWith('.css') || fileName.endsWith('.js') || fileName.endsWith('.mjs')) {
+            continue
+          }
+          
+          // Only delete other asset types (images, fonts, etc.) that are from root folders
+          // and are being incorrectly bundled
           for (const folder of rootAssetFolders) {
-            if (chunk.fileName.includes(folder) || 
-                (chunk.name && chunk.name.includes(folder))) {
-              // Delete this asset from the bundle
+            // Only delete if it's actually from the root folder, not from src/
+            // React app assets should have hashed names or be in assets/ folder
+            if ((chunk.fileName.includes(folder) || 
+                (chunk.name && chunk.name.includes(folder))) &&
+                !chunk.fileName.includes('index') &&
+                !chunk.fileName.includes('main') &&
+                !fileName.match(/^[a-f0-9]+-[a-f0-9]+\./) &&
+                !fileName.startsWith('assets/')) {
+              // Delete this asset from the bundle (but never CSS/JS)
               delete bundle[fileName]
               break
             }
@@ -331,9 +545,20 @@ export default defineConfig({
         // Customize asset file names, but we'll handle root assets differently
         assetFileNames: (assetInfo) => {
           // If asset is from a root folder, we don't want it bundled
+          // BUT: CSS files from src/ should be bundled normally
           const rootAssetFolders = ['images', 'pages', 'fonts', 'styles', 'scripts', 'photos', 'magazines']
+          
+          // Don't exclude if it's a CSS file from src/ (React app CSS)
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+            // Check if it's from src/ folder (React app CSS) - these should be bundled
+            if (assetInfo.name.includes('src') || assetInfo.name.includes('main.css') || assetInfo.name.includes('index')) {
+              return 'assets/[name]-[hash][extname]'
+            }
+          }
+          
           for (const folder of rootAssetFolders) {
-            if (assetInfo.name && assetInfo.name.includes(folder)) {
+            // Only exclude if it's actually from the root folder, not from src/
+            if (assetInfo.name && assetInfo.name.includes(folder) && !assetInfo.name.includes('src/')) {
               // Return a path that we can identify and replace later
               return `assets/${assetInfo.name}`
             }
