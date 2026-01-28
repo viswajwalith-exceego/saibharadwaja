@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 function Home() {
     return (
-        <div className="container w-75" id="divBody">
+        <div className="container" id="divBody">
             <div className="row">
                 <div className="col-lg-2">&nbsp;</div>
                 <div className="col-lg-8">

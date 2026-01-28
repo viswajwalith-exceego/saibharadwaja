@@ -6,59 +6,35 @@ function BooksRead() {
 
   return (
     <>
-      <div className="table-responsive">
-        <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-          <tbody>
-            <tr>
-              <td>
-                <span className="TitleColourNShadow1">
-                  <strong>Read Books - గ్రంధ పారాయణము</strong>
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="container text-center my-3">
+        <span className="TitleColourNShadow1">
+          <strong>Read Books - గ్రంధ పారాయణము</strong>
+        </span>
       </div>
 
-      <div className="container bg-transparant p-sm-2 p-md-5">
-        <div className="table-responsive">
-          <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
-            <tbody>
-              <tr>
-                <td colSpan="3">
-                  <span className="TitleColourNShadow1">
-                    <strong>తెలుగు గ్రంధములు</strong>
-                  </span>
-                </td>
-              </tr>
-              {books.map((book, index) => {
-                if (index % 3 === 0) {
-                  const rowBooks = books.slice(index, index + 3)
-                  return (
-                    <React.Fragment key={index}>
-                      <tr>
-                        {rowBooks.map((b) => (
-                          <td key={b.id}>
-                            <Link to={`/books/read/${b.id}`} className="textDarkBlueLink">
-                              <img className="img-fluid img-thumbnail" src={b.thumb} alt={b.name} />
-                            </Link>
-                          </td>
-                        ))}
-                        {rowBooks.length < 3 && <td colSpan={3 - rowBooks.length}></td>}
-                      </tr>
-                      <tr>
-                        {rowBooks.map((b) => (
-                          <td key={b.id}>{b.name}</td>
-                        ))}
-                        {rowBooks.length < 3 && <td colSpan={3 - rowBooks.length}></td>}
-                      </tr>
-                    </React.Fragment>
-                  )
-                }
-                return null
-              })}
-            </tbody>
-          </table>
+      <div className="container bg-transparant p-2 p-md-5">
+        <div className="text-center mb-4">
+          <span className="TitleColourNShadow1">
+            <strong>తెలుగు గ్రంధములు</strong>
+          </span>
+        </div>
+
+        <div className="row justify-content-center">
+          {books.map((book) => (
+            <div className="col-12 col-md-6 col-lg-4 mb-4 text-center" key={book.id}>
+              <div className="h-100 d-flex flex-column align-items-center">
+                <Link to={`/books/read/${book.id}`} className="textDarkBlueLink d-block mb-2">
+                  <img
+                    className="img-fluid img-thumbnail"
+                    src={book.thumb}
+                    alt={book.name}
+                    style={{ maxHeight: '250px', objectFit: 'contain' }}
+                  />
+                </Link>
+                <div>{book.name}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </>

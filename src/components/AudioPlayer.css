@@ -19,7 +19,7 @@
 /* Left Section: Controls */
 .player-controls-section {
   flex: 1;
-  min-width: 320px;
+  /* min-width: 320px; Removed to fix mobile overflow */
   padding: 30px;
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   display: flex;
@@ -49,16 +49,23 @@
 }
 
 .album-art.rotating {
-  animation: rotate 20s linear infinite;
+  animation: pulse-glow 3s infinite ease-in-out;
 }
 
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4);
+    transform: scale(1);
   }
 
-  to {
-    transform: rotate(360deg);
+  50% {
+    box-shadow: 0 0 20px 10px rgba(52, 152, 219, 0.2);
+    transform: scale(1.02);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);
+    transform: scale(1);
   }
 }
 
@@ -274,7 +281,7 @@
 /* Right Section: Playlist */
 .player-playlist-section {
   flex: 1;
-  min-width: 320px;
+  /* min-width: 320px; Removed to fix mobile overflow */
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -363,6 +370,36 @@
   font-size: 0.85rem;
   color: #95a5a6;
   margin-left: 10px;
+  min-width: 40px;
+  text-align: right;
+}
+
+.btn-download-item {
+  background: none;
+  border: none;
+  color: #bdc3c7;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 5px;
+  font-size: 1.1rem;
+  transition: color 0.2s, transform 0.2s;
+  border-radius: 5px;
+  line-height: 1;
+}
+
+.btn-download-item:hover {
+  color: #3498db;
+  background-color: #f0f8ff;
+  transform: translateY(-1px);
+}
+
+.playlist-item.active .btn-download-item {
+  color: #3498db;
+}
+
+.playlist-item.active .btn-download-item:hover {
+  color: #2980b9;
+  background-color: #d6eaf8;
 }
 
 /* Scrollbar styling */
@@ -388,13 +425,26 @@
     flex-direction: column;
   }
 
-  .player-controls-section {
+  .player-controls-section,
+  .player-playlist-section {
+    min-width: 0;
+    /* Override fixed min-width */
+    width: 100%;
     padding: 20px;
+  }
+
+  .audio-player-wrapper {
+    margin: 20px auto;
   }
 
   .player-playlist-section {
     max-height: 400px;
   }
+
+  .controls-row {
+    max-width: 100%;
+    /* Allow controls to use full width if needed, but keeping them centered */
+    justify-content: center;
+    gap: 20px;
+  }
 }
-
-

@@ -58,7 +58,12 @@ const AudioPlayer = ({ songs = [], title = 'Playlist' }) => {
 
   const handleLoadedMetadata = () => {
     if (!audioRef.current) return
-    setDuration(audioRef.current.duration)
+    const metaDuration = audioRef.current.duration
+    if (isFinite(metaDuration) && metaDuration > 0) {
+      setDuration(metaDuration)
+    } else {
+      // Fallback or keep 0 if unknown
+    }
     setIsLoading(false)
   }
 
@@ -80,14 +85,38 @@ const AudioPlayer = ({ songs = [], title = 'Playlist' }) => {
     setCurrentIndex((prev) => (prev < songs.length - 1 ? prev + 1 : 0))
     setIsPlaying(true)
   }
+  const parseDuration = (str) => {
+    if (!str) return 0
+    try {
+      const parts = str.toString().split(':').map(Number)
+      if (parts.some(n => isNaN(n))) return 0
+      if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2]
+      if (parts.length === 2) return parts[0] * 60 + parts[1]
+      return 0
+    } catch (e) {
+      return 0
+    }
+  }
+
 
   const handlePrev = () => {
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : songs.length - 1))
     setIsPlaying(true)
   }
 
+  const handleDownload = (e, song) => {
+    e.stopPropagation()
+    const link = document.createElement('a')
+    link.href = song.url
+    link.download = song.name || 'audio-file'
+    link.target = '_blank'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   const formatTime = (time) => {
-    if (!time || isNaN(time)) return '0:00'
+    if (!time || isNaN(time) || !isFinite(time)) return '0:00'
     const minutes = Math.floor(time / 60)
     const seconds = Math.floor(time % 60)
     return `${minutes}:${seconds.toString().padStart(2, '0')}`
@@ -95,24 +124,41 @@ const AudioPlayer = ({ songs = [], title = 'Playlist' }) => {
 
   const handleSeek = (e) => {
     const time = parseFloat(e.target.value)
-    if (audioRef.current) {
-      audioRef.current.currentTime = time
+    if (isFinite(time)) {
+      if (audioRef.current) {
+        audioRef.current.currentTime = time
+      }
+      setCurrentTime(time)
     }
-    setCurrentTime(time)
   }
 
   const playSongAtIndex = (index) => {
+    if (index === currentIndex) {
+      if (!isPlaying && audioRef.current) {
+        audioRef.current.play().catch(e => console.error("Play failed", e))
+        setIsPlaying(true)
+      }
+      return
+    }
     setCurrentIndex(index)
     setIsPlaying(true)
   }
 
   const scrollToActiveSong = () => {
-    // Logic to scroll playlist to active song could go here
+    if (playlistRef.current) {
+      // Simple scroll logic could be added here if needed
+      // const activeItem = playlistRef.current.querySelector('.playlist-item.active')
+      // if (activeItem) activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }
   }
 
   useEffect(() => {
     scrollToActiveSong()
   }, [currentIndex])
+
+  const effectiveDuration = (isFinite(duration) && duration > 0)
+    ? duration
+    : parseDuration(currentSong.duration);
 
   return (
     <div className="audio-player-wrapper">
@@ -154,31 +200,25 @@ const AudioPlayer = ({ songs = [], title = 'Playlist' }) => {
               <input
                 type="range"
                 min="0"
-                max={duration || 0}
+                max={effectiveDuration || 0}
                 value={currentTime}
                 onChange={handleSeek}
                 className="seek-slider"
-                style={{ backgroundSize: `${(currentTime / duration) * 100}% 100%` }}
+                style={{ backgroundSize: `${effectiveDuration > 0 ? (currentTime / effectiveDuration) * 100 : 0}% 100%` }}
               />
               <div className="buffer-bar" style={{ width: `${buffered}%` }}></div>
             </div>
-            <span className="time-total">{formatTime(duration)}</span>
+            <span className="time-total">
+              {(isFinite(duration) && duration > 0) ? formatTime(duration) : (currentSong.duration || '0:00')}
+            </span>
           </div>
 
-          <div className="controls-row">
-            <button
-              className={`btn-control ${isShuffle ? 'active' : ''}`}
-              onClick={() => setIsShuffle(!isShuffle)}
-              title="Shuffle"
-            >
-              <i className="icon-shuffle">🔀</i>
-            </button>
-
+          <div className="controls-row justify-content-center">
             <button className="btn-control main-nav" onClick={handlePrev}>
               <i className="icon-prev">⏮</i>
             </button>
 
-            <button className="btn-play-pause" onClick={handlePlayPause}>
+            <button className="btn-play-pause mx-4" onClick={handlePlayPause}>
               {isLoading ? (
                 <div className="spinner-small"></div>
               ) : (
@@ -188,14 +228,6 @@ const AudioPlayer = ({ songs = [], title = 'Playlist' }) => {
 
             <button className="btn-control main-nav" onClick={handleNext}>
               <i className="icon-next">⏭</i>
-            </button>
-
-            <button
-              className={`btn-control ${isRepeat ? 'active' : ''}`}
-              onClick={() => setIsRepeat(!isRepeat)}
-              title="Repeat"
-            >
-              <i className="icon-repeat">🔁</i>
             </button>
           </div>
 
@@ -235,6 +267,13 @@ const AudioPlayer = ({ songs = [], title = 'Playlist' }) => {
                   <span className="item-artist">{song.engname}</span>
                 </div>
                 <div className="item-duration">{song.duration}</div>
+                <button
+                  className="btn-download-item"
+                  onClick={(e) => handleDownload(e, song)}
+                  title="Download"
+                >
+                  ⬇
+                </button>
               </div>
             ))}
           </div>

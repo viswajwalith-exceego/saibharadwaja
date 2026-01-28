@@ -1,21 +1,11 @@
 function Contact() {
   return (
     <div>
-      <div className="table-responsive">
-        <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-          <tbody>
-            <tr>
-              <td>
-                <span className="PageHeadingBS1">Contacts</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img className="img-fluid" src="/images/pages/contactspage.png" alt="Contacts" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="container text-center my-3">
+        <span className="PageHeadingBS1">Contacts</span>
+        <div className="mt-3">
+          <img className="img-fluid" src="/images/pages/contactspage.png" alt="Contacts" />
+        </div>
       </div>
 
       <div className="container bg-transparant p-sm-2 p-md-5">

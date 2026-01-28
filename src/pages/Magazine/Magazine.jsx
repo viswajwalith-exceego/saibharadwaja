@@ -53,64 +53,54 @@ function Magazine() {
 
   const renderIssues = (year) => {
     const issues = magazineIssues[year] || []
-    const rows = []
-    for (let i = 0; i < issues.length; i += 3) {
-      const rowIssues = issues.slice(i, i + 3)
-      rows.push(
-        <React.Fragment key={i}>
-          <tr>
-            {rowIssues.map((issue) => (
-              <td key={issue.month}>
-                <a href={issue.pdf} target="_blank" rel="noopener noreferrer">
-                  <img className="img-fluid img-thumbnail" src={issue.thumb} alt={issue.month} />
-                </a>
-              </td>
-            ))}
-            {rowIssues.length < 3 && <td colSpan={3 - rowIssues.length}></td>}
-          </tr>
-          <tr>
-            {rowIssues.map((issue) => (
-              <td key={issue.month}>{issue.month} {year}</td>
-            ))}
-            {rowIssues.length < 3 && <td colSpan={3 - rowIssues.length}></td>}
-          </tr>
-        </React.Fragment>
-      )
-    }
-    return rows
+    return (
+      <div className="row justify-content-center">
+        {issues.map((issue) => (
+          <div className="col-12 col-md-6 col-lg-4 mb-4 text-center" key={issue.month}>
+            <div className="h-100 d-flex flex-column align-items-center">
+              <a href={issue.pdf} target="_blank" rel="noopener noreferrer" className="d-block mb-2">
+                <img
+                  className="img-fluid img-thumbnail"
+                  src={issue.thumb}
+                  alt={issue.month}
+                  style={{ maxHeight: '250px', objectFit: 'contain' }}
+                />
+              </a>
+              <div>{issue.month} {year}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
   }
 
   return (
     <>
-      <div className="table-responsive">
-        <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-          <tbody>
-            <tr>
-              <td>
-                <div className="card magazineCard724 mx-auto mb-3" style={{ maxWidth: '60%' }}>
-                  <div className="card-header PageHeadingBS1">Saibaba Magazine</div>
-                  <div className="card-body">
-                    <img className="img-fluid" src="/images/pages/magazines301224.jpg" alt="Magazine" />
+      <div className="container my-3">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-10 col-lg-8">
+            <div className="card magazineCard724 w-100">
+              <div className="card-header PageHeadingBS1 text-center">Saibaba Magazine</div>
+              <div className="card-body text-center">
+                <img className="img-fluid" src="/images/pages/magazines301224.jpg" alt="Magazine" />
+                <br />
+                <br />
+                <blockquote className="blockquote mb-0 LatoCenter9_724">
+                  <p>
+                    Edited, Printed and Published by &nbsp;Dr. R.S.Sasidhar, Ph.D.
                     <br />
+                    Trustee of Sri Manga Bharadwaja Trust, Ongole 523002
                     <br />
-                    <blockquote className="blockquote mb-0 LatoCenter9_724">
-                      <p>
-                        Edited, Printed and Published by &nbsp;Dr. R.S.Sasidhar, Ph.D.
-                        <br />
-                        Trustee of Sri Manga Bharadwaja Trust, Ongole 523002
-                        <br />
-                        Postal Registration Number: Prakasam/16/2024-2026 &nbsp; Regd.No.37926/83
-                      </p>
-                      <footer className="blockquote LatoCenter9_724">
-                        Email : <cite title="Source Title">editor.saibaba@gmail.com</cite>
-                      </footer>
-                    </blockquote>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    Postal Registration Number: Prakasam/16/2024-2026 &nbsp; Regd.No.37926/83
+                  </p>
+                  <footer className="blockquote LatoCenter9_724">
+                    Email : <cite title="Source Title">editor.saibaba@gmail.com</cite>
+                  </footer>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="container bg-transparant pt-sm-2 pt-md-3">
@@ -139,12 +129,8 @@ function Magazine() {
                     aria-labelledby={`flush-heading${year}`}
                     data-bs-parent="#accordionFlusA1"
                   >
-                    <div className="accordion-body p-0">
-                      <div className="table-responsive">
-                        <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
-                          <tbody>{renderIssues(year)}</tbody>
-                        </table>
-                      </div>
+                    <div className="accordion-body p-3">
+                      {renderIssues(year)}
                     </div>
                   </div>
                 </div>
@@ -170,19 +156,13 @@ function Magazine() {
                 aria-labelledby="flush-headingPrevious"
                 data-bs-parent="#accordionFlusA1"
               >
-                <div className="accordion-body p-0">
-                  <div className="table-responsive">
-                    <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
-                      <tbody>
-                        {Object.keys(magazineIssues)
-                          .filter((year) => parseInt(year) < 2021)
-                          .sort((a, b) => b - a)
-                          .map((year) => (
-                            <React.Fragment key={year}>{renderIssues(year)}</React.Fragment>
-                          ))}
-                      </tbody>
-                    </table>
-                  </div>
+                <div className="accordion-body p-3">
+                  {Object.keys(magazineIssues)
+                    .filter((year) => parseInt(year) < 2021)
+                    .sort((a, b) => b - a)
+                    .map((year) => (
+                      <React.Fragment key={year}>{renderIssues(year)}</React.Fragment>
+                    ))}
                 </div>
               </div>
             </div>

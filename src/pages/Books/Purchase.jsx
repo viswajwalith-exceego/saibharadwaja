@@ -72,19 +72,12 @@ function BooksPurchase() {
   return (
     <>
       {/* Title */}
-      <div className="table-responsive">
-        <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-          <tbody>
-            <tr>
-              <td>
-                <span className="PageHeadingBS1">Purchase Books</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      {/* Title */}
+      <div className="container text-center my-3">
+        <span className="PageHeadingBS1">Purchase Books</span>
       </div>
 
-      <div className="container-fluid bg-transparant p-sm-2 p-md-5">
+      <div className="container bg-transparant p-2 p-md-5">
         {/* Top Button */}
         <div className="d-flex justify-content-end mb-3">
           <Link to="/books" className="btn btn-outline-primary">
@@ -92,98 +85,92 @@ function BooksPurchase() {
           </Link>
         </div>
 
-        {/* Books Table */}
-        <div id="books-list-container" className="table table-responsive">
-          <table className="table table-light ta table-responsive textBooksListNPrices w-100">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Book Name</th>
-                <th scope="col">Price (₹ )</th>
-                <th scope="col">#</th>
-                <th scope="col">Book Name</th>
-                <th scope="col">Price (₹ )</th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayPairs.map((pair, index) => {
-                const isHeaderRow = pair.left?.name && (
-                  pair.left.name.includes('Books in') || 
-                  pair.right?.name?.includes('Books in')
-                )
+        {/* Height Header for Desktop */}
+        <div className="row font-weight-bold border-bottom d-none d-md-flex textBooksListNPrices mb-2">
+          <div className="col-6">
+            <div className="row">
+              <div className="col-1">#</div>
+              <div className="col-9">Book Name</div>
+              <div className="col-2">Price</div>
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="row">
+              <div className="col-1">#</div>
+              <div className="col-9">Book Name</div>
+              <div className="col-2">Price</div>
+            </div>
+          </div>
+        </div>
 
+        {/* Books List */}
+        <div className="textBooksListNPrices">
+          {displayPairs.map((pair, index) => {
+            const isHeaderRow = pair.left?.name && (
+              pair.left.name.includes('Books in') ||
+              pair.right?.name?.includes('Books in')
+            )
+
+            // Function to render a single book item
+            const renderItem = (item) => {
+              if (!item) return null;
+              const isHeader = item.name && item.name.includes('Books in');
+
+              if (isHeader) {
                 return (
-                  <tr key={index}>
-                    <td className={isHeaderRow ? '' : 'txtSmallNumber'}>
-                      {pair.left?.number || ''}
-                    </td>
-                    <td>
-                      {pair.left?.name ? (
-                        isHeaderRow ? (
-                          <span className="textLatoBold10px">{pair.left.name}</span>
-                        ) : (
-                          pair.left.name
-                        )
-                      ) : ''}
-                    </td>
-                    <td>{pair.left?.price || ''}</td>
-                    <td className={isHeaderRow ? '' : 'txtSmallNumber'}>
-                      {pair.right?.number || ''}
-                    </td>
-                    <td>
-                      {pair.right?.name ? (
-                        isHeaderRow ? (
-                          <span className="textLatoBold10px">{pair.right.name}</span>
-                        ) : (
-                          pair.right.name
-                        )
-                      ) : ''}
-                    </td>
-                    <td>{pair.right?.price || ''}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+                  <div className="col-12 py-2">
+                    <span className="textLatoBold10px" style={{ fontSize: '1.1em' }}>{item.name}</span>
+                  </div>
+                );
+              }
+
+              return (
+                <div className="row py-1">
+                  <div className="col-2 col-md-1 txtSmallNumber">{item.number}</div>
+                  <div className="col-8 col-md-9">{item.name}</div>
+                  <div className="col-2 col-md-2">{item.price}</div>
+                </div>
+              );
+            };
+
+            return (
+              <div className="row border-bottom py-1" key={index}>
+                <div className="col-12 col-md-6 border-end-md">
+                  {renderItem(pair.left)}
+                </div>
+                <div className="col-12 col-md-6">
+                  {renderItem(pair.right)}
+                </div>
+              </div>
+            )
+          })}
         </div>
 
         {/* Links Section */}
-        <div className="table-responsive">
-          <table className="table table-light text-center textDarkBlueLink7pt">
-            <tbody>
-              <tr>
-                <td>
-                  <Link to="/contact" className="textDarkBlueLink7pt">
-                    Office Addresses
-                  </Link>&nbsp;
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="http://messageofthemasters.org" className="textDarkBlueLink7pt" target="_blank" rel="noopener noreferrer">
-                    Order Books online - USA
-                  </a>&nbsp;
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a 
-                    href="https://www.amazon.in/Sri-Saileelamruthamu-Ekkirala-Bharadwaja/dp/B073NM5J4N/ref=asc_df_B073NM5J4N/?tag=googleshopdes-21&linkCode=df0&hvadid=397008201820&hvpos=&hvnetw=g&hvrand=13323348298140579992&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9062178&hvtargid=pla-843956350796&psc=1&ext_vrnc=hi"
-                    className="textDarkBlueLink7pt" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    Amazon India
-                  </a>&nbsp;
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <br /><br /><br />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="container text-center mt-5 textDarkBlueLink7pt">
+          <div className="row justify-content-center">
+            <div className="col-12 mb-2">
+              <Link to="/contact" className="textDarkBlueLink7pt" style={{ fontSize: '1rem' }}>
+                Office Addresses
+              </Link>
+            </div>
+            <div className="col-12 mb-2">
+              <a href="http://messageofthemasters.org" className="textDarkBlueLink7pt" target="_blank" rel="noopener noreferrer" style={{ fontSize: '1rem' }}>
+                Order Books online - USA
+              </a>
+            </div>
+            <div className="col-12 mb-2">
+              <a
+                href="https://www.amazon.in/Sri-Saileelamruthamu-Ekkirala-Bharadwaja/dp/B073NM5J4N"
+                className="textDarkBlueLink7pt"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ fontSize: '1rem' }}
+              >
+                Amazon India
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </>

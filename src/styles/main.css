@@ -37,9 +37,10 @@
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
+  /* Use block to allow text-align to work for scrolling consistency */
+  text-align: center;
+  /* Centers the content if it fits */
   width: 100%;
 }
 
@@ -54,16 +55,18 @@
 }
 
 .photosNavigator ul {
-  display: inline-flex;
-  /* Horizontal layout */
-  padding: 0 20px;
-  margin: 0 auto;
+  display: inline-block;
+  /* Behaves like text, respects text-align center */
+  padding: 0 10px;
+  margin: 0;
   list-style: none;
-  justify-content: center;
-  align-items: center;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 
+
 .photosNavigator li {
+  display: inline-block;
   margin: 0 5px;
 }
 

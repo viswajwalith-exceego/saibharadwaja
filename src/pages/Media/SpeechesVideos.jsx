@@ -52,23 +52,27 @@ function SpeechesVideos() {
         </div>
       </div>
 
-      <div className="container p-sm-2 p-md-4">
+      <div className="container p-2 p-md-4">
         <div style={{ marginTop: '20px', animation: 'fadeIn 0.5s ease' }}>
-          {activeTab === 'telugu' && (
-            <AudioPlayer songs={teluguSpeeches} title="Telugu Speeches" />
-          )}
+          <div className="row justify-content-center">
+            <div className="col-12 col-lg-10">
+              {activeTab === 'telugu' && (
+                <AudioPlayer songs={teluguSpeeches} title="Telugu Speeches" />
+              )}
 
-          {activeTab === 'english' && (
-            <AudioPlayer songs={englishSpeeches} title="English Speeches" />
-          )}
+              {activeTab === 'english' && (
+                <AudioPlayer songs={englishSpeeches} title="English Speeches" />
+              )}
 
-          {activeTab === 'bhajans' && (
-            <AudioPlayer songs={bhajans} title="Bhajans" />
-          )}
+              {activeTab === 'bhajans' && (
+                <AudioPlayer songs={bhajans} title="Bhajans" />
+              )}
 
-          {activeTab === 'videos' && (
-            <VideoPlayer videos={videos} />
-          )}
+              {activeTab === 'videos' && (
+                <VideoPlayer videos={videos} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

@@ -1,35 +1,31 @@
+import { useState } from 'react'
+
 function AboutAcharya() {
+  const [activeSection, setActiveSection] = useState(null)
+
+  const toggleSection = (section) => {
+    setActiveSection(activeSection === section ? null : section)
+  }
+
   return (
     <>
-      <div className="table-responsive">
-        <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-          <tbody>
-            <tr>
-              <td>
-                <span className="PageHeadingBS1">Parama Pujya Acharya Sri Ekkirala Bharadwaja</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img className="img-fluid" src="/images/pages/acharya.png" alt="Acharya" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="container text-center my-3">
+        <span className="PageHeadingBS1">Parama Pujya Acharya Sri Ekkirala Bharadwaja</span>
+        <div className="mt-3">
+          <img className="img-fluid" src="/images/pages/acharya.png" alt="Acharya" style={{ maxHeight: '300px' }} />
+        </div>
       </div>
 
-      <div className="container-fluid bg-transparant p-sm-2 p-md-5 pt-md-0">
-      <div className="container-fluid bg-transparant p-1 p-md-5">
+      <div className="container bg-transparant p-2 p-md-5 pt-md-0">
         <div className="accordion accordion-flush" id="accordionFlusA1">
           {/* A True Master */}
           <div className="accordion-item">
             <h2 className="accordion-header" id="flush-headingOne">
               <button
-                className="accordion-button collapsed"
+                className={`accordion-button ${activeSection === 'one' ? '' : 'collapsed'}`}
                 type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseOne"
-                aria-expanded="false"
+                onClick={() => toggleSection('one')}
+                aria-expanded={activeSection === 'one'}
                 aria-controls="flush-collapseOne"
               >
                 <span className="TitleColourNShadow1"><strong>A True Master</strong></span>
@@ -38,7 +34,7 @@ function AboutAcharya() {
 
             <div
               id="flush-collapseOne"
-              className="accordion-collapse collapse"
+              className={`accordion-collapse collapse ${activeSection === 'one' ? 'show' : ''}`}
               aria-labelledby="flush-headingOne"
               data-bs-parent="#accordionFlusA1"
             >
@@ -150,11 +146,10 @@ function AboutAcharya() {
           <div className="accordion-item">
             <h2 className="accordion-header" id="flush-headingTwo">
               <button
-                className="accordion-button collapsed"
+                className={`accordion-button ${activeSection === 'two' ? '' : 'collapsed'}`}
                 type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseTwo"
-                aria-expanded="false"
+                onClick={() => toggleSection('two')}
+                aria-expanded={activeSection === 'two'}
                 aria-controls="flush-collapseTwo"
               >
                 <span className="TitleColourNShadow1"><strong>Family - Guru Kutumbam</strong></span>
@@ -163,7 +158,7 @@ function AboutAcharya() {
 
             <div
               id="flush-collapseTwo"
-              className="accordion-collapse collapse"
+              className={`accordion-collapse collapse ${activeSection === 'two' ? 'show' : ''}`}
               aria-labelledby="flush-headingTwo"
               data-bs-parent="#accordionFlusA1"
             >
@@ -311,11 +306,10 @@ function AboutAcharya() {
           <div className="accordion-item">
             <h2 className="accordion-header" id="flush-headingThree">
               <button
-                className="accordion-button collapsed"
+                className={`accordion-button ${activeSection === 'three' ? '' : 'collapsed'}`}
                 type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseThree"
-                aria-expanded="false"
+                onClick={() => toggleSection('three')}
+                aria-expanded={activeSection === 'three'}
                 aria-controls="flush-collapseThree"
               >
                 <span className="TitleColourNShadow1"><strong>Life Sketch</strong></span>
@@ -324,7 +318,7 @@ function AboutAcharya() {
 
             <div
               id="flush-collapseThree"
-              className="accordion-collapse collapse"
+              className={`accordion-collapse collapse ${activeSection === 'three' ? 'show' : ''}`}
               aria-labelledby="flush-headingThree"
               data-bs-parent="#accordionFlusA1"
             >
@@ -404,7 +398,7 @@ function AboutAcharya() {
                 />
                 <p className="textJustified">
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <span style={{fontSize: '150%'}}>A</span>fter 1981, Pujya Acharyaji resigned his job and devoted himself
+                  <span style={{ fontSize: '150%' }}>A</span>fter 1981, Pujya Acharyaji resigned his job and devoted himself
                   full time to intensive research into the lives and teachings of several saints, travelling extensively and
                   personally contacting many of them. He studied in depth seven branches of science and five of the major
                   religions of the world (Buddhism, Islam, Hinduism, Christianity and Taoism). In 1983 began the fortnightly
@@ -459,48 +453,50 @@ function AboutAcharya() {
                 <br />
                 <br />
 
-                <table className="table table align-middle table-striped textJustified">
-                  <thead>
-                    <tr>
-                      <th scope="col">Date</th>
-                      <th scope="col">Historical Event</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>February 8</td>
-                      <td>Pujya Master E.B.'s first visit to Shirdi</td>
-                    </tr>
-                    <tr>
-                      <td>February 9</td>
-                      <td>Pujya Master's experience of Enlightenment by Baba</td>
-                    </tr>
-                    <tr>
-                      <td>March 6</td>
-                      <td>Pujya Master's Marriage with Ammagaru</td>
-                    </tr>
-                    <tr>
-                      <td>April 12</td>
-                      <td>Pujya Master's Mahasamadhi - Master leaves his mortal presence</td>
-                    </tr>
-                    <tr>
-                      <td>July 23</td>
-                      <td>Pujya Master's son Dwaraknath Jnaneswar (second child) Birthday</td>
-                    </tr>
-                    <tr>
-                      <td>November 7</td>
-                      <td>Pujya Master's daughter Vedavathi (first child) Birthday</td>
-                    </tr>
-                    <tr>
-                      <td>October 1</td>
-                      <td>Pujya Master's Wife Smt.Alivelu Manga Tayaru Birthday</td>
-                    </tr>
-                    <tr>
-                      <td>October 30</td>
-                      <td>Pujya Master's Birthday</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="table-responsive">
+                  <table className="table table align-middle table-striped textJustified">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Historical Event</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>February 8</td>
+                        <td>Pujya Master E.B.'s first visit to Shirdi</td>
+                      </tr>
+                      <tr>
+                        <td>February 9</td>
+                        <td>Pujya Master's experience of Enlightenment by Baba</td>
+                      </tr>
+                      <tr>
+                        <td>March 6</td>
+                        <td>Pujya Master's Marriage with Ammagaru</td>
+                      </tr>
+                      <tr>
+                        <td>April 12</td>
+                        <td>Pujya Master's Mahasamadhi - Master leaves his mortal presence</td>
+                      </tr>
+                      <tr>
+                        <td>July 23</td>
+                        <td>Pujya Master's son Dwaraknath Jnaneswar (second child) Birthday</td>
+                      </tr>
+                      <tr>
+                        <td>November 7</td>
+                        <td>Pujya Master's daughter Vedavathi (first child) Birthday</td>
+                      </tr>
+                      <tr>
+                        <td>October 1</td>
+                        <td>Pujya Master's Wife Smt.Alivelu Manga Tayaru Birthday</td>
+                      </tr>
+                      <tr>
+                        <td>October 30</td>
+                        <td>Pujya Master's Birthday</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
                 <br />
                 <br />
               </div>
@@ -511,11 +507,10 @@ function AboutAcharya() {
           <div className="accordion-item">
             <h2 className="accordion-header" id="flush-headingFour">
               <button
-                className="accordion-button collapsed"
+                className={`accordion-button ${activeSection === 'four' ? '' : 'collapsed'}`}
                 type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#flush-collapseFour"
-                aria-expanded="false"
+                onClick={() => toggleSection('four')}
+                aria-expanded={activeSection === 'four'}
                 aria-controls="flush-collapseFour"
               >
                 <span className="TitleColourNShadow1"><strong>Books n Articles</strong></span>
@@ -524,106 +519,108 @@ function AboutAcharya() {
 
             <div
               id="flush-collapseFour"
-              className="accordion-collapse collapse"
+              className={`accordion-collapse collapse ${activeSection === 'four' ? 'show' : ''}`}
               aria-labelledby="flush-headingFour"
               data-bs-parent="#accordionFlusA1"
             >
               <div className="accordion-body">
-                <table className="table table-striped table align-middle table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">
-                        <span className="textJustified">Books</span>
-                      </th>
-                      <th scope="col">
-                        <span className="textJustified">Social Media</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <a
-                          href="/books/read/Bhagavan-Sri-Bharadwaja"
-                          target="_blank"
-                          className="textDarkBlueLink"
-                          rel="noopener noreferrer"
-                        >
-                          భగవాన్ శ్రీ భరద్వాజ
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href="https://youtu.be/GevMvUso0Ko"
-                          target="_blank"
-                          className="textDarkBlueLink"
-                          rel="noopener noreferrer"
-                        >
-                          <img src="/images/MasterEB/YouTubeIcon.jpg" alt="YouTube" /> YouTube - సమర్ధ సద్గురువు
-                        </a>
-                      </td>
-                    </tr>
+                <div className="table-responsive">
+                  <table className="table table-striped table align-middle table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col">
+                          <span className="textJustified">Books</span>
+                        </th>
+                        <th scope="col">
+                          <span className="textJustified">Social Media</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <a
+                            href="/books/read/Bhagavan-Sri-Bharadwaja"
+                            target="_blank"
+                            className="textDarkBlueLink"
+                            rel="noopener noreferrer"
+                          >
+                            భగవాన్ శ్రీ భరద్వాజ
+                          </a>
+                        </td>
+                        <td>
+                          <a
+                            href="https://youtu.be/GevMvUso0Ko"
+                            target="_blank"
+                            className="textDarkBlueLink"
+                            rel="noopener noreferrer"
+                          >
+                            <img src="/images/MasterEB/YouTubeIcon.jpg" alt="YouTube" /> YouTube - సమర్ధ సద్గురువు
+                          </a>
+                        </td>
+                      </tr>
 
-                    <tr>
-                      <td>
-                        <a
-                          href="/books/read/Mahapurushudu"
-                          target="_blank"
-                          className="textDarkBlueLink"
-                          rel="noopener noreferrer"
-                        >
-                          మహా పురుషుడు
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href="https://en.wikipedia.org/wiki/Ekkirala_Bharadwaja"
-                          target="_blank"
-                          className="textDarkBlueLink"
-                          rel="noopener noreferrer"
-                        >
-                          <img src="/images/MasterEB/wikipedia.jpg" alt="Wikipedia" /> Wikipedia Page
-                        </a>
-                      </td>
-                    </tr>
+                      <tr>
+                        <td>
+                          <a
+                            href="/books/read/Mahapurushudu"
+                            target="_blank"
+                            className="textDarkBlueLink"
+                            rel="noopener noreferrer"
+                          >
+                            మహా పురుషుడు
+                          </a>
+                        </td>
+                        <td>
+                          <a
+                            href="https://en.wikipedia.org/wiki/Ekkirala_Bharadwaja"
+                            target="_blank"
+                            className="textDarkBlueLink"
+                            rel="noopener noreferrer"
+                          >
+                            <img src="/images/MasterEB/wikipedia.jpg" alt="Wikipedia" /> Wikipedia Page
+                          </a>
+                        </td>
+                      </tr>
 
-                    <tr>
-                      <td>
-                        <a
-                          href="/books/read/Mahatmula-Muddu-Biddadu"
-                          className="textDarkBlueLink"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          మహాత్ముల ముద్దుబిడ్దడు
-                        </a>
-                      </td>
-                      <td>
-                        <a
-                          href="https://www.facebook.com/AcharyaEkkiralaBharadwaja/"
-                          target="_blank"
-                          className="textDarkBlueLink"
-                          rel="noopener noreferrer"
-                        >
-                          <img src="/images/MasterEB/facebookicon.jpg" alt="Facebook" /> Facebook Page
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      <tr>
+                        <td>
+                          <a
+                            href="/books/read/Mahatmula-Muddu-Biddadu"
+                            className="textDarkBlueLink"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            మహాత్ముల ముద్దుబిడ్దడు
+                          </a>
+                        </td>
+                        <td>
+                          <a
+                            href="https://www.facebook.com/AcharyaEkkiralaBharadwaja/"
+                            target="_blank"
+                            className="textDarkBlueLink"
+                            rel="noopener noreferrer"
+                          >
+                            <img src="/images/MasterEB/facebookicon.jpg" alt="Facebook" /> Facebook Page
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <br />
-      <br />
-      <br />
-      <p className="jaisaimaster">Jai Sai Master</p>
-      <br />
-      <br />
-      <br />
-    </div>
+
+        <br />
+        <br />
+        <br />
+        <p className="jaisaimaster">Jai Sai Master</p>
+        <br />
+        <br />
+        <br />
+      </div >
     </>
   )
 }

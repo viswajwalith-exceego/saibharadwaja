@@ -17,74 +17,50 @@ function Books() {
   try {
     return (
       <>
-        <div className="table-responsive">
-          <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-            <tbody>
-              <tr>
-                <td>
-                  <span className="PageHeadingBS1">Books / గ్రంధ పారాయణము</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="container text-center my-3">
+          <span className="PageHeadingBS1">Books / గ్రంధ పారాయణము</span>
         </div>
 
-        <div className="container bg-transparant p-sm-2 p-md-5">
+        <div className="container bg-transparant p-2 p-md-5">
           <div className="d-flex justify-content-end mb-3">
             <Link to="/books/purchase" className="btn btn-outline-primary">
               Purchase Physical Books
             </Link>
           </div>
 
-          <div className="table-responsive">
-            <table className="table mana-fixed-noB-table table-light text-center textJustifiedNoMargin">
-              <tbody>
-                <tr>
-                  <td colSpan="3">
-                    <span className="TitleColourNShadow1">
-                      <strong>తెలుగు గ్రంధములు</strong>
-                    </span>
-                  </td>
-                </tr>
-                {books.map((book, index) => {
-                  if (index % 3 === 0) {
-                    const rowBooks = books.slice(index, index + 3)
-                    return (
-                      <React.Fragment key={index}>
-                        <tr>
-                          {rowBooks.map((b) => (
-                            <td key={b.id}>
-                              <Link to={`/books/read/${b.id}`} className="textDarkBlueLink">
-                                <img 
-                                  className="img-fluid img-thumbnail" 
-                                  src={b.thumb || '/images/placeholder.jpg'} 
-                                  alt={b.name || 'Book'} 
-                                  style={{ maxHeight: '200px' }}
-                                  onError={(e) => {
-                                    e.target.src = '/images/placeholder.jpg'
-                                  }}
-                                />
-                              </Link>
-                            </td>
-                          ))}
-                          {rowBooks.length < 3 && <td colSpan={3 - rowBooks.length}></td>}
-                        </tr>
-                        <tr>
-                          {rowBooks.map((b) => (
-                            <td key={b.id}>
-                              <strong>{b.name || 'Unknown'}</strong><br />
-                              <small className="text-muted">{b.engName || ''}</small>
-                            </td>
-                          ))}
-                          {rowBooks.length < 3 && <td colSpan={3 - rowBooks.length}></td>}
-                        </tr>
-                      </React.Fragment>
-                    )
-                  }
-                  return null
-                })}
-              </tbody>
-            </table>
+          <div className="text-center mb-4">
+            <span className="TitleColourNShadow1">
+              <strong>తెలుగు గ్రంధములు</strong>
+            </span>
+          </div>
+
+          <div className="row justify-content-center">
+            {books.map((book) => (
+              <div className="col-12 col-md-6 col-lg-4 mb-5 text-center" key={book.id}>
+                <div className="h-100 d-flex flex-column align-items-center">
+                  <Link to={`/books/read/${book.id}`} className="textDarkBlueLink d-block mb-3">
+                    <img
+                      className="img-fluid img-thumbnail"
+                      src={book.thumb || '/images/placeholder.jpg'}
+                      alt={book.name || 'Book'}
+                      style={{ maxHeight: '250px', objectFit: 'contain' }}
+                      onError={(e) => {
+                        e.target.src = '/images/placeholder.jpg'
+                      }}
+                    />
+                  </Link>
+                  <div>
+                    <strong>{book.name || 'Unknown'}</strong>
+                    {book.engName && (
+                      <>
+                        <br />
+                        <small className="text-muted">{book.engName}</small>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </>

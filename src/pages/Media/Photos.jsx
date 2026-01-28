@@ -8,11 +8,11 @@ function Photos() {
     // Pattern: match files in numbered gallery folders (1 Early Years, 2 Family, etc.)
     // In dev mode, Vite handles this natively and returns URLs
     // In build mode, the plugin transforms this to root-relative paths
-    const photoFiles = import.meta.glob('../../../images/Photos/**/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG}', { 
-        eager: true, 
+    const photoFiles = import.meta.glob('../../../images/Photos/**/*.{jpg,jpeg,png,gif,JPG,JPEG,PNG}', {
+        eager: true,
         as: 'url'
     })
-    
+
     // Debug: Log what import.meta.glob returns
     console.log('[Photos] import.meta.glob returned:', Object.keys(photoFiles).length, 'files')
     if (Object.keys(photoFiles).length > 0) {
@@ -31,7 +31,7 @@ function Photos() {
             const parts = normalizedPath.split('/').filter(p => p && p !== '.') // Filter out empty and current dir parts
             const fileName = parts.pop()
             const folderName = parts.pop()
-            
+
             // Safety check
             if (!fileName || !folderName) {
                 console.warn(`[Photos] Skipping invalid path: ${path} (fileName: ${fileName}, folderName: ${folderName})`)
@@ -44,7 +44,7 @@ function Photos() {
             if (path.includes('unitegallery') || path.includes('UniteGallery')) {
                 return
             }
-            
+
             let galleryId = 999
             let galleryName = folderName
 
@@ -104,7 +104,7 @@ function Photos() {
                 console.warn(`[Photos] No URL found for path: ${path}`)
                 return
             }
-            
+
             if (isFull) {
                 galleriesMap[galleryId].photosMap[photoKey].full = photoUrl
             } else {
@@ -121,7 +121,7 @@ function Photos() {
                 console.warn(`[Photos] Gallery missing photosMap:`, g)
                 return null
             }
-            
+
             const photos = Object.values(g.photosMap).map(p => ({
                 thumb: p.thumb || p.full, // Fallback to full if no thumb
                 full: p.full || p.thumb,   // Fallback to thumb if no full
@@ -223,16 +223,8 @@ function Photos() {
 
     return (
         <div>
-            <div className="table-responsive">
-                <table className="table table-transparant table-borderless text-center textJustifiedNoMargin">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span className="PageHeadingBS1">Photo Gallery</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div className="container text-center my-3">
+                <span className="PageHeadingBS1">Photo Gallery</span>
             </div>
 
             <div className="photosNavigator GglSourceSansPro">
@@ -261,7 +253,7 @@ function Photos() {
             <div className="container">
                 <div className="row">
                     {currentPhotos.map((photo, index) => (
-                        <div key={index} className="col-md-3 mb-4">
+                        <div key={index} className="col-6 col-md-3 mb-4">
                             <div
                                 className="photo-thumbnail"
                                 onClick={() => openModal(index)}
