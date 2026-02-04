@@ -1,26 +1,46 @@
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { MENU_ROUTES, useReact } from '../config/featureFlags'
+
+function MenuLink({ route, className, onClick, children }) {
+  const useReactRoute = useReact(route.flag)
+  const content = children || (route.strong ? <strong>{route.label}</strong> : route.label)
+  if (useReactRoute) {
+    return (
+      <Link className={className} to={route.reactPath} onClick={onClick}>
+        {content}
+      </Link>
+    )
+  }
+  return (
+    <a className={className} href={route.legacyUrl} onClick={onClick}>
+      {content}
+    </a>
+  )
+}
 
 function Layout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const closeMenu = () => setIsMenuOpen(false)
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+  const logoRoute = MENU_ROUTES.find(r => r.isLogo)
+  const topRowRoutes = MENU_ROUTES.filter(r => ['acharya', 'divyajanani'].includes(r.flag))
+  const bottomRowRoutes = MENU_ROUTES.filter(r => ['books', 'magazine', 'speechesVideos', 'photos', 'contact', 'calendar', 'home'].includes(r.flag))
+  const mobileNavRoutes = MENU_ROUTES.filter(r => !r.isLogo)
 
   return (
     <div className="bodyFillGrad">
       {/* Mobile Burger Menu */}
       <div className="manaBurgerMenuDiv">
         <nav className="navbar fixed-top navbar-light navbar-expand-lg bg-warning bg-opacity-100 p-0 mr-auto">
-          <a className="nav-link" href="/Default.aspx">
+          <MenuLink route={logoRoute || MENU_ROUTES[0]} className="nav-link">
             <img className="img img-fluid m-0 me-lg-5" src="/images/MasterPage/mainLogo2024.png" alt="Saibharadwaja.org" />
-          </a>
+          </MenuLink>
 
-          <button 
+          <button
             className={`navbar-toggler px-3 collapsed border-0 ${isMenuOpen ? '' : 'collapsed'}`}
-            type="button" 
-            onClick={toggleMenu}
+            type="button"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle navigation"
           >
             <span></span>
@@ -30,53 +50,18 @@ function Layout({ children }) {
 
           <div className={`collapse navbar-collapse fw-normal fs-1 ${isMenuOpen ? 'show' : ''}`} id="collapsingNavbar3">
             <ul className="navbar-nav w-100 justify-content-center mainMasterPageMenuFontMobiles">
+              {mobileNavRoutes.map((route, idx) => (
+                <React.Fragment key={route.flag}>
+                  <li role="separator" className="divider"></li>
+                  {[1, 3, 5, 7].includes(idx) && (
+                    <li className="nav-item d-none d-lg-block"><span className="nav-link">&nbsp;&#9733;&nbsp;</span></li>
+                  )}
+                  <li className="nav-item">
+                    <MenuLink route={route} className="nav-link" onClick={closeMenu} />
+                  </li>
+                </React.Fragment>
+              ))}
               <li role="separator" className="divider"></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/pages/acharyaeb.aspx" onClick={() => setIsMenuOpen(false)}>
-                  Acharya Sri Ekkirala Bharadwaja
-                </a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/pages/Ammagaru/divyajanani.aspx" onClick={() => setIsMenuOpen(false)}>
-                  Divyajanani Alivelu Mangamma
-                </a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/pages/sbbooks/sbbooksTel.html" onClick={() => setIsMenuOpen(false)}>Books</a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/pages/magazine.aspx" onClick={() => setIsMenuOpen(false)}>Saibaba Magazine</a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/media/speeches-videos" onClick={() => setIsMenuOpen(false)}>Speeches & Videos</Link>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/photos/gallery1.aspx" onClick={() => setIsMenuOpen(false)}>Photos</a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/pages/contacts.aspx" onClick={() => setIsMenuOpen(false)}><strong>Contacts</strong></a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/pages/calander.aspx" onClick={() => setIsMenuOpen(false)}><strong>Calender</strong></a>
-              </li>
-              <li role="separator" className="divider"></li>
-              <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
-              <li className="nav-item">
-                <a className="nav-link" href="/Default.aspx" onClick={() => setIsMenuOpen(false)}>Home</a>
-              </li>
             </ul>
           </div>
         </nav>
@@ -85,34 +70,37 @@ function Layout({ children }) {
       {/* Desktop Menu */}
       <div className="manaBigMenuDiv position-fixed">
         <div className="manaBigMenuDiv-left">
-          <a href="/Default.aspx">
+          <MenuLink route={logoRoute || MENU_ROUTES[0]}>
             <img className="img img-fluid m-2" src="/images/MasterPage/mainLogo2024.png" alt="Saibharadwaja.org" />
-          </a>
+          </MenuLink>
         </div>
         <div className="manaBigMenuDiv-middle">
           <div className="manaMainMenuDivs mainMasterPageMenuFontBigScreens">
             <div className="manaMainMenuDivs-TopRow">
-              <a href="/pages/acharyaeb.aspx">Acharya Sri Ekkirala Bharadwaja</a>
-              <a className="p-2">&nbsp;&nbsp;&#9733;&nbsp;</a>
-              <a href="/pages/Ammagaru/divyajanani.aspx">Divyajanani Alivelu Mangamma</a>
+              {topRowRoutes.map((route, i) => (
+                <React.Fragment key={route.flag}>
+                  <MenuLink route={route}>{route.label}</MenuLink>
+                  {i === 0 && <a className="p-2">&nbsp;&nbsp;&#9733;&nbsp;</a>}
+                </React.Fragment>
+              ))}
             </div>
             <div className="manaMainMenuDivs-MiddleGapRow">
               &nbsp;
             </div>
             <div className="manaMainMenuDivs-BottomRow">
-              <a href="/pages/sbbooks/sbbooksTel.html">Books</a>
-              <a className="p-2 m-0">&#9733;</a>
-              <a className="p-0 m-0" href="/pages/magazine.aspx">Saibaba Magazine</a>
-              <a className="p-1 m-0">&#9733;</a>
-              <Link className="p-0 m-0" to="/media/speeches-videos">Speeches & Videos</Link>
-              <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <a href="/photos/gallery1.aspx">Photos</a>
-              <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <a className="p-0 m-0" href="/pages/contacts.aspx">Contacts</a>
-              <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <a className="p-0 m-0" href="/pages/calander.aspx">Calender</a>
-              <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <a className="p-0 m-0" href="/Default.aspx">Home</a>
+              {bottomRowRoutes.map((route, i) => (
+                <React.Fragment key={route.flag}>
+                  <MenuLink
+                    route={route}
+                    className={[1, 2, 4, 5, 6].includes(i) ? 'p-0 m-0' : ''}
+                  />
+                  {i < bottomRowRoutes.length - 1 && (
+                    <span className={i === 1 ? 'p-1 m-0' : 'p-2 m-0'}>
+                      {i === 1 ? '\u2733' : '\u00A0\u2733\u00A0'}
+                    </span>
+                  )}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
@@ -133,4 +121,3 @@ function Layout({ children }) {
 }
 
 export default Layout
-

@@ -37,8 +37,16 @@ function serveRootAssets() {
     configureServer(server) {
       // Use a custom middleware that runs early but doesn't interfere with /New/ path
       server.middlewares.use((req, res, next) => {
-        const url = req.url || ''
-        
+        const url = (req.url || '').split('?')[0]
+        // Serve feature-flags.js for React app at /New/
+        if (url === '/New/feature-flags.js') {
+          const filePath = join(process.cwd(), 'public', 'feature-flags.js')
+          if (existsSync(filePath)) {
+            res.setHeader('Content-Type', 'application/javascript')
+            createReadStream(filePath).pipe(res)
+            return
+          }
+        }
         // Don't interfere with /New/ path or Vite's HMR
         if (url.startsWith('/New/') || url.startsWith('/@') || url.startsWith('/node_modules/')) {
           return next()
