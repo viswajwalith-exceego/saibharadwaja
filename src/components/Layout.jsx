@@ -13,9 +13,9 @@ function Layout({ children }) {
       {/* Mobile Burger Menu */}
       <div className="manaBurgerMenuDiv">
         <nav className="navbar fixed-top navbar-light navbar-expand-lg bg-warning bg-opacity-100 p-0 mr-auto">
-          <Link className="nav-link" to="/">
+          <a className="nav-link" href="/Default.aspx">
             <img className="img img-fluid m-0 me-lg-5" src="/images/MasterPage/mainLogo2024.png" alt="Saibharadwaja.org" />
-          </Link>
+          </a>
 
           <button 
             className={`navbar-toggler px-3 collapsed border-0 ${isMenuOpen ? '' : 'collapsed'}`}
@@ -32,25 +32,25 @@ function Layout({ children }) {
             <ul className="navbar-nav w-100 justify-content-center mainMasterPageMenuFontMobiles">
               <li role="separator" className="divider"></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about/acharya" onClick={() => setIsMenuOpen(false)}>
+                <a className="nav-link" href="/pages/acharyaeb.aspx" onClick={() => setIsMenuOpen(false)}>
                   Acharya Sri Ekkirala Bharadwaja
-                </Link>
+                </a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/about/divyajanani" onClick={() => setIsMenuOpen(false)}>
+                <a className="nav-link" href="/pages/Ammagaru/divyajanani.aspx" onClick={() => setIsMenuOpen(false)}>
                   Divyajanani Alivelu Mangamma
-                </Link>
+                </a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/books" onClick={() => setIsMenuOpen(false)}>Books</Link>
+                <a className="nav-link" href="/pages/sbbooks/sbbooksTel.html" onClick={() => setIsMenuOpen(false)}>Books</a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/magazine" onClick={() => setIsMenuOpen(false)}>Saibaba Magazine</Link>
+                <a className="nav-link" href="/pages/magazine.aspx" onClick={() => setIsMenuOpen(false)}>Saibaba Magazine</a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
@@ -60,22 +60,22 @@ function Layout({ children }) {
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/media/photos" onClick={() => setIsMenuOpen(false)}>Photos</Link>
+                <a className="nav-link" href="/photos/gallery1.aspx" onClick={() => setIsMenuOpen(false)}>Photos</a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contact" onClick={() => setIsMenuOpen(false)}><strong>Contacts</strong></Link>
+                <a className="nav-link" href="/pages/contacts.aspx" onClick={() => setIsMenuOpen(false)}><strong>Contacts</strong></a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/calendar" onClick={() => setIsMenuOpen(false)}><strong>Calender</strong></Link>
+                <a className="nav-link" href="/pages/calander.aspx" onClick={() => setIsMenuOpen(false)}><strong>Calender</strong></a>
               </li>
               <li role="separator" className="divider"></li>
               <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
               <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={() => setIsMenuOpen(false)}>Home</Link>
+                <a className="nav-link" href="/Default.aspx" onClick={() => setIsMenuOpen(false)}>Home</a>
               </li>
             </ul>
           </div>
@@ -85,34 +85,34 @@ function Layout({ children }) {
       {/* Desktop Menu */}
       <div className="manaBigMenuDiv position-fixed">
         <div className="manaBigMenuDiv-left">
-          <Link to="/">
+          <a href="/Default.aspx">
             <img className="img img-fluid m-2" src="/images/MasterPage/mainLogo2024.png" alt="Saibharadwaja.org" />
-          </Link>
+          </a>
         </div>
         <div className="manaBigMenuDiv-middle">
           <div className="manaMainMenuDivs mainMasterPageMenuFontBigScreens">
             <div className="manaMainMenuDivs-TopRow">
-              <Link to="/about/acharya">Acharya Sri Ekkirala Bharadwaja</Link>
+              <a href="/pages/acharyaeb.aspx">Acharya Sri Ekkirala Bharadwaja</a>
               <a className="p-2">&nbsp;&nbsp;&#9733;&nbsp;</a>
-              <Link to="/about/divyajanani">Divyajanani Alivelu Mangamma</Link>
+              <a href="/pages/Ammagaru/divyajanani.aspx">Divyajanani Alivelu Mangamma</a>
             </div>
             <div className="manaMainMenuDivs-MiddleGapRow">
               &nbsp;
             </div>
             <div className="manaMainMenuDivs-BottomRow">
-              <Link to="/books">Books</Link>
+              <a href="/pages/sbbooks/sbbooksTel.html">Books</a>
               <a className="p-2 m-0">&#9733;</a>
-              <Link className="p-0 m-0" to="/magazine">Saibaba Magazine</Link>
+              <a className="p-0 m-0" href="/pages/magazine.aspx">Saibaba Magazine</a>
               <a className="p-1 m-0">&#9733;</a>
               <Link className="p-0 m-0" to="/media/speeches-videos">Speeches & Videos</Link>
               <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <Link to="/media/photos">Photos</Link>
+              <a href="/photos/gallery1.aspx">Photos</a>
               <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <Link className="p-0 m-0" to="/contact">Contacts</Link>
+              <a className="p-0 m-0" href="/pages/contacts.aspx">Contacts</a>
               <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <Link className="p-0 m-0" to="/calendar">Calender</Link>
+              <a className="p-0 m-0" href="/pages/calander.aspx">Calender</a>
               <a className="p-2 m-0">&nbsp;&#9733;&nbsp;</a>
-              <Link className="p-0 m-0" to="/">Home</Link>
+              <a className="p-0 m-0" href="/Default.aspx">Home</a>
             </div>
           </div>
         </div>
