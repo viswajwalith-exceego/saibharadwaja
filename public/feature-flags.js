@@ -6,14 +6,14 @@
 (function () {
   window.REACT_BASE = '/New';
   window.FEATURE_FLAGS = {
-    home: true,
-    acharya: true,
-    divyajanani: true,
-    books: true,
-    magazine: true,
+    home: false,
+    acharya: false,
+    divyajanani: false,
+    books: false,
+    magazine: false,
     speechesVideos: true,
-    photos: true,
-    contact: true,
-    calendar: true
+    photos: false,
+    contact: false,
+    calendar: false
   };
 })();
