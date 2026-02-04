@@ -1,35 +1,37 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useSearchParams, Link } from 'react-router-dom'
 import { books } from '../../data/books'
 
 function BookDetail() {
   const { bookId } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const pageFromUrl = Math.max(1, parseInt(searchParams.get('page'), 10) || 1)
+
   // Handle both string and number IDs
   const book = books.find(b => b.id.toString() === bookId.toString())
 
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(pageFromUrl)
   const [totalPages, setTotalPages] = useState(50) // Default fallback
   const [imageError, setImageError] = useState(false)
 
   useEffect(() => {
-    // Reset state on book change
-    setCurrentPage(1)
+    setCurrentPage(pageFromUrl)
     setImageError(false)
     if (book?.totalPages) {
       setTotalPages(book.totalPages)
     }
-  }, [bookId, book])
+  }, [bookId, book, pageFromUrl])
 
-  const handleNext = () => {
-    setCurrentPage(prev => prev + 1)
+  const updatePage = (page) => {
+    const p = Math.max(1, Math.min(page, totalPages))
+    setCurrentPage(p)
     setImageError(false)
+    setSearchParams(p === 1 ? {} : { page: p }, { replace: true })
   }
 
+  const handleNext = () => updatePage(currentPage + 1)
   const handlePrev = () => {
-    if (currentPage > 1) {
-      setCurrentPage(prev => prev - 1)
-      setImageError(false)
-    }
+    if (currentPage > 1) updatePage(currentPage - 1)
   }
 
   // Logic to determine image URL based on book folder and page number
@@ -109,7 +111,7 @@ function BookDetail() {
           type="number"
           min="1"
           value={currentPage}
-          onChange={(e) => setCurrentPage(Math.max(1, parseInt(e.target.value) || 1))}
+          onChange={(e) => updatePage(parseInt(e.target.value, 10) || 1)}
           className="form-control text-center"
           style={{ width: '70px' }}
         />

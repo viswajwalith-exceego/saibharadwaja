@@ -17,16 +17,17 @@ export const MENU_ROUTES = [
   { flag: 'calendar', reactPath: '/calendar', legacyUrl: '/pages/calander.aspx', label: 'Calender', strong: true }
 ]
 
-/** Get current flags; defaults to all legacy if script not loaded */
+/** Get current flags; defaults to all React when script not loaded (we're in the React app) */
 export function getFlags() {
   if (typeof window === 'undefined') return {}
   return window.FEATURE_FLAGS || {}
 }
 
-/** True if this menu item should use the React app */
+/** True if this menu item should use the React app. Defaults to true when flags not loaded (we're in /New/) */
 export function useReact(flagKey) {
   const flags = getFlags()
-  return Boolean(flags[flagKey])
+  if (flags[flagKey] === false) return false
+  return true
 }
 
 export { REACT_BASE }
