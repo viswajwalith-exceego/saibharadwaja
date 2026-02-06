@@ -25,8 +25,14 @@ function Layout({ children }) {
 
   const logoRoute = MENU_ROUTES.find(r => r.isLogo)
   const topRowRoutes = MENU_ROUTES.filter(r => ['acharya', 'divyajanani'].includes(r.flag))
-  const bottomRowRoutes = MENU_ROUTES.filter(r => ['books', 'magazine', 'speechesVideos', 'photos', 'contact', 'calendar', 'home'].includes(r.flag))
-  const mobileNavRoutes = MENU_ROUTES.filter(r => !r.isLogo)
+  // Bottom row order: Books, Magazine, Speeches & Videos, Photos, Contacts, Calendar, Home (Home must be last)
+  const bottomRowOrder = ['books', 'magazine', 'speechesVideos', 'photos', 'contact', 'calendar', 'home']
+  const bottomRowRoutes = bottomRowOrder.map(flag => MENU_ROUTES.find(r => r.flag === flag)).filter(Boolean)
+  // Mobile menu: all routes except logo, but include Home at the end (matching legacy order)
+  const mobileNavRoutes = [
+    ...MENU_ROUTES.filter(r => !r.isLogo && r.flag !== 'home'),
+    MENU_ROUTES.find(r => r.flag === 'home')
+  ].filter(Boolean)
 
   return (
     <div className="bodyFillGrad">
@@ -54,7 +60,7 @@ function Layout({ children }) {
                 <React.Fragment key={route.flag}>
                   <li role="separator" className="divider"></li>
                   {[1, 3, 5, 7].includes(idx) && (
-                    <li className="nav-item d-none d-lg-block"><span className="nav-link">&nbsp;&#9733;&nbsp;</span></li>
+                    <li className="nav-item d-none d-lg-block"><a className="nav-link">&nbsp;&#9733;&nbsp;</a></li>
                   )}
                   <li className="nav-item">
                     <MenuLink route={route} className="nav-link" onClick={closeMenu} />
@@ -95,9 +101,9 @@ function Layout({ children }) {
                     className={[1, 2, 4, 5, 6].includes(i) ? 'p-0 m-0' : ''}
                   />
                   {i < bottomRowRoutes.length - 1 && (
-                    <span className={i === 1 ? 'p-1 m-0' : 'p-2 m-0'}>
-                      {i === 1 ? '\u2733' : '\u00A0\u2733\u00A0'}
-                    </span>
+                    <a className={i === 1 ? 'p-1 m-0' : 'p-2 m-0'} href="#" onClick={(e) => e.preventDefault()}>
+                      {i === 1 ? '\u00A0\u2733' : i === 4 ? '\u00A0\u2733\u00A0\u00A0' : i === 5 ? '\u00A0\u2733\u00A0' : '\u00A0\u2733'}
+                    </a>
                   )}
                 </React.Fragment>
               ))}

@@ -2,6 +2,10 @@
  * Menu items and their React vs legacy URLs.
  * Matches keys in public/feature-flags.js (window.FEATURE_FLAGS).
  * Layout uses this + window.FEATURE_FLAGS to render Link vs <a href>.
+ *
+ * Canonical menu order (match legacy):
+ *   Top row:    Acharya Sri Ekkirala Bharadwaja ★ Divyajanani Alivelu Mangamma
+ *   Bottom row: Books ★ Saibaba Magazine ★ Speeches & Videos ★ Photos ★ Contacts ★ Calendar ★ Home
  */
 const REACT_BASE = typeof window !== 'undefined' && window.REACT_BASE ? window.REACT_BASE : '/New'
 
